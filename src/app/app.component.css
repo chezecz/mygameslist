@@ -1,0 +1,10 @@
+.user {
+	float: left;
+	width: 25%;
+	position: static;
+}
+
+.description {
+	position: relative;
+	margin-left: 25%;
+}
