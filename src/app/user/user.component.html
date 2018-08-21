@@ -1,10 +1,20 @@
-<div>
+<div class="profile">
 
 <img src="roflandeze.png">
 
-<h3>{{name}} Profile</h3>
+<h3>{{user.name}} Profile</h3>
 
-<p>{{desc}}</p>
 <button>Update Profile</button>
 <button>Check Game List</button>
 </div>
+<div class="list">
+<ul class="gameList">
+  <li *ngFor="let game of games">
+    <a routerLink="/game/{{game.id}}">
+      {{game.name}}
+    </a>
+    <p>{{game.description}}</p>
+  </li>
+</ul>
+<div>
+<button (click)="back()">Back</button>
