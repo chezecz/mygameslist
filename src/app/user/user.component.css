@@ -2,3 +2,20 @@ p {
 	border: 1px solid blue;
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
+
+.profile {
+	float: left;
+	width: 25%;
+	position: static;
+}
+
+.list {
+	position: relative;
+	margin-left: 25%;
+}
+
+.footer {
+	position: relative;
+	margin-bottom: 50%;
+	margin-left: -34%;
+}

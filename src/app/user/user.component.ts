@@ -52,7 +52,12 @@ export class UserComponent implements OnInit {
   }]
 
   ngOnInit() {
+    this.getUser();
 }
+
+  getUser(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+  }
 
   back(): void {
     this.location.back();

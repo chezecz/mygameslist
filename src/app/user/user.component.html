@@ -2,7 +2,7 @@
 
 <img src="roflandeze.png">
 
-<h3>{{user.name}} Profile</h3>
+<h3>{{user[0].name}} Profile</h3>
 
 <button>Update Profile</button>
 <button>Check Game List</button>
@@ -17,4 +17,7 @@
   </li>
 </ul>
 <div>
-<button (click)="back()">Back</button>
+
+<div class="footer">
+	<button (click)="back()">Back</button>
+</div>
