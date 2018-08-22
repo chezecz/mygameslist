@@ -11,11 +11,12 @@ p {
 
 .description {
 	position: relative;
-	margin-left: 65%;
+	margin-left: 45%;
 }
 
 .footer {
 	position: relative;
-	margin-bottom: 50%;
-	margin-left: 65%;
+	margin-bottom: 100%;
+	top: 200px;
+	margin-left: 45%;
 }
