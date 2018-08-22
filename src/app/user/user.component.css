@@ -1,21 +1,33 @@
-p {
-	border: 1px solid blue;
-	font-family: "Comic Sans MS", cursive, sans-serif;
-}
 
 .profile {
 	float: left;
 	width: 25%;
+	height: 600px;
 	position: static;
+	border: solid;
 }
 
 .list {
 	position: relative;
 	margin-left: 25%;
+	border: none;
 }
 
 .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.gameDescription {
+	border: none;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.profileButtons {
 	position: relative;
-	margin-bottom: 50%;
-	margin-left: -34%;
+	margin-top: 90%;
+	color: black;
 }

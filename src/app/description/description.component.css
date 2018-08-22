@@ -1,22 +1,39 @@
 p {
-	border: 1px solid blue;
+	border: none;
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .profile {
 	float: left;
-	width: 25%;
+	width: 270px;
 	position: static;
+	border: 1px solid;
+	border-radius: 3px;
+	padding: 1px;
 }
 
 .description {
 	position: relative;
-	margin-left: 45%;
+	margin-left: 0%;
 }
 
 .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+img {
+	border: 1px solid #ddd;
+	border-radius: 7px;
+	padding: 3px;
+	width: 250px;
+}
+
+.profileButtons {
 	position: relative;
-	margin-bottom: 100%;
-	top: 200px;
-	margin-left: 45%;
+	margin-top: 90%;
+	color: black;
 }
