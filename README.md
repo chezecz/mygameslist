@@ -53,4 +53,7 @@ Includes infoprmation about selected game
     8. Traditional variables ('i' and 'k' for iterators, 'a', 'b', 'sqrt' for math calculations) are considered as meaningful
     9. Binary operators should have adjacent single spacing ("b = a + 1" or "root == solution")
     10. Uniry operators shoud not be separeted with any spacings
-    11. It is not allowed to use any constants in code. All constants should be assigned to variables.
+    11. It is not allowed to use any constants in code. All constants should be assigned to variables
+    12. Console log could be used for debugging
+    
+    
