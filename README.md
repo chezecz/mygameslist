@@ -48,13 +48,17 @@ Includes infoprmation about selected game
     3. It is not allowed to comment parts of the code
     4. Code should be separated into files of reasonable length
     5. Line length is limited with 80 characters
-    6. Tabulations (\t) are used for making correc spacing
+    6. Tabulations ('\t') are used for making correct spacing
     7. Variable name should be meaningful but no,longer than 20 characteres
-    8. Traditional variables ('i' and 'k' for iterators, 'a', 'b', 'sqrt' for math calculations) are considered as meaningful
+    8. Traditional variables ('i', 'k' for iterators, 'a', 'b', 'sqrt' for math calculations) are considered as meaningful
     9. Binary operators should have adjacent single spacing ("b = a + 1" or "root == solution")
-    10. Uniry operators shoud not be separeted with any spacings
+    10. Uniry operators should not be separeted with any spacings
     11. It is not allowed to use any constants in code. All constants should be assigned to variables
     12. Console log could be used for debugging
+    13. If the same code will be used twice, it should be separated into reusable function
+    14. Any significant changes of application should be divided into separate branch
+    15. All the changes in code, file structure should be documented as soon as possible
+    
     
     
 ### Current Folder Structure
