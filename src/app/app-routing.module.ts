@@ -7,25 +7,25 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
 {
-	path:'game/:id', component: DescriptionComponent
+	path:'game/:id', component: DescriptionComponent;
 },
 {
-	path:'user/:id', component: UserComponent
+	path:'user/:id', component: UserComponent;
 },
 {
-	path:'', redirectTo:'/dashboard', pathMatch: 'full'
+	path:'', redirectTo:'/dashboard', pathMatch: 'full';
 },
 {
-	path:'dashboard', component: DashboardComponent
+	path:'dashboard', component: DashboardComponent;
 }];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes),
-  ],
-  exports: [
-  	RouterModule
-  ],
-  declarations: []
-})
-export class AppRoutingModule { }
+	imports: [
+		RouterModule.forRoot(routes),
+	],
+	exports: [
+		RouterModule
+	],
+	declarations: []
+});
+export class AppRoutingModule {}
