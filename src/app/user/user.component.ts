@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Game } from '../game';
-import { User } from '../user';
+import { Game } from '../../classes/game';
+import { User } from '../../classes/user';
 
 @Component({
   selector: 'app-user',
