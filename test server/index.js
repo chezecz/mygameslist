@@ -23,6 +23,7 @@ const app = express();
 // GraphQL Schema
 
 const UserSchema = new GraphQLObjectType({
+
 	name: "User",
 	fields: () => ({
 		id: {type: new GraphQLNonNull(GraphQLInt)},
@@ -69,15 +70,33 @@ const MainRootResolver = new GraphQLObjectType({
 		games: {
 			type: new GraphQLList(GameSchema),
 			resolve: function() {
-				return Games
+				return (Game.findAll().then(games => {
+							console.log(games)
+						}))
 			}
 		},
 		user: {
+			type: UserSchema,
+			args: {
+				id: {
+					type: new GraphQLNonNull(GraphQLInt)
+				}
+			},
+			resolve: function(root, args, context) {
+				console.log(args)
+				userid = args.id
+				return User.findOne({where: {userid}}).then(user => {
+					console.log("Username: " + user.get('username'))
+					new UserSchema(user)
+				})
+			}
+		},
+		game: {
 			type: GraphQLString,
 			resolve: function() {
-				userid = 2
-				return User.findOne({where: {userid}}).then(user => {
-					console.log(user)
+				gameid = 7
+				return Game.findOne({where: {gameid}}).then(game => {
+					console.log(game.get('gamename'))
 				})
 			}
 		}
@@ -87,14 +106,6 @@ const MainRootResolver = new GraphQLObjectType({
 const MainSchema = new GraphQLSchema({
 	query: MainRootResolver
 });
-
-// Root Resolver
-
-var root = {
-	message: () => 'Hello World!',
-	user: () => getUser,
-	game: () => getGame
-};
 
 // Setting up Sequelize object for sqlite3 database
 
@@ -109,7 +120,7 @@ const sequelize = new Sequelize('database', null, null, {
 		idle: 10000
 	},
 	storage: 'gamesdatabase.db'
-})
+});
 
 // Testing Connection
 
@@ -138,7 +149,7 @@ const User = sequelize.define('user', {
 	}
 }, {
 	tableName: 'users'
-})
+});
 
 // Passwords Table
 
@@ -151,7 +162,7 @@ const Password = sequelize.define('password', {
 		type: Sequelize.STRING,
 		field: 'password'
 	}
-})
+});
 
 // Games Table
 
@@ -173,7 +184,7 @@ const Game = sequelize.define('game', {
 		type: Sequelize.STRING,
 		field: 'releasedate'
 	}
-})
+});
 
 // UserLists table
 
@@ -187,7 +198,7 @@ const UserList = sequelize.define('userlist', {
 		field: 'listid',
 		primaryKey: true
 	}
-})
+});
 
 // Lists table
 
@@ -200,43 +211,43 @@ const List = sequelize.define('list', {
 		type: Sequelize.INTEGER,
 		field: 'gameid'
 	}
-})
+});
 
 // Removing Default Sequelize Attirubutes
 
-User.removeAttribute('id')
-User.removeAttribute('createdAt')
-User.removeAttribute('updatedAt')
+User.removeAttribute('id');
+User.removeAttribute('createdAt');
+User.removeAttribute('updatedAt');
 
-Password.removeAttribute('id')
-Password.removeAttribute('createdAt')
-Password.removeAttribute('updatedAt')
+Password.removeAttribute('id');
+Password.removeAttribute('createdAt');
+Password.removeAttribute('updatedAt');
 
-Game.removeAttribute('id')
-Game.removeAttribute('createdAt')
-Game.removeAttribute('updatedAt')
+Game.removeAttribute('id');
+Game.removeAttribute('createdAt');
+Game.removeAttribute('updatedAt');
 
-UserList.removeAttribute('id')
-UserList.removeAttribute('createdAt')
-UserList.removeAttribute('updatedAt')
+UserList.removeAttribute('id');
+UserList.removeAttribute('createdAt');
+UserList.removeAttribute('updatedAt');
 
-List.removeAttribute('id')
-List.removeAttribute('createdAt')
-List.removeAttribute('updatedAt')
+List.removeAttribute('id');
+List.removeAttribute('createdAt');
+List.removeAttribute('updatedAt');
 
 // Defining Foreign Keys
 
-Password.belongsTo(User, {foreignKey: 'userid'})
-User.hasOne(Password, {foreignKey: 'userid'})
+Password.belongsTo(User, {foreignKey: 'userid'});
+User.hasOne(Password, {foreignKey: 'userid'});
 
-UserList.belongsTo(User, {foreignKey: 'userid'})
-User.hasMany(List, {foreignKey: 'userid'})
+UserList.belongsTo(User, {foreignKey: 'userid'});
+User.hasMany(List, {foreignKey: 'userid'});
 
-List.belongsTo(Game, {foreignKey: 'gameid'})
-Game.hasMany(List, {foreignKey: 'gameid'})
+List.belongsTo(Game, {foreignKey: 'gameid'});
+Game.hasMany(List, {foreignKey: 'gameid'});
 
-List.belongsTo(UserList, {foreignKey: 'listid'})
-UserList.hasMany(List, {foreignKey: 'listid'})
+List.belongsTo(UserList, {foreignKey: 'listid'});
+UserList.hasMany(List, {foreignKey: 'listid'});
 
 // Queries
 
@@ -249,7 +260,7 @@ Game.findOne().then(game => {
 })
 
 User.findAll().then(users => {
-	console.log(users)
+	console.log(users);
 })
 
 // Sequelize Sync
@@ -264,9 +275,9 @@ sequelize
 
 // App Routing
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World!'));
 
-app.listen(3000, () => console.log('Server activated'))
+app.listen(3000, () => console.log('Server activated'));
 
 // GraphQL Interactive Interface
 
@@ -279,23 +290,23 @@ app.use('/graphql', express_graphql({
 
 app.use(function (req, res, next) {
 	res.status(404).send('Whoops')
-})
+});
 
 app.use(function (err, req, res, next) {
 	console.eroor(err.stack)
 	res.status(500).send('Whoops')
-})
+});
 
 // Possible usefull in the future
 
 app.post('/post', function (req, res) {
 	res.send('POST')
-})
+});
 
 app.put('/put', function (req, res) {
 	res.send('put request')
-})
+});
 
 app.delete('/delete', function (req, res) {
 	res.send('delete request')
-})
+});
