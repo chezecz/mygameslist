@@ -69,10 +69,12 @@ Includes infoprmation about selected game
 |-- angular.json
 |-- database/
 |   `-- mygameslist.sql
-|-- gameposter.jpg
+|-- img/
+|   |-- gameposter.jpg
+|   `-- roflandeze.png*
+|-- node_modules/
 |-- package-lock.json
 |-- package.json
-|-- roflandeze.png*
 |-- src/
 |   |-- app/
 |   |   |-- app-routing.module.spec.ts
@@ -92,20 +94,20 @@ Includes infoprmation about selected game
 |   |   |   |-- description.component.html
 |   |   |   |-- description.component.spec.ts
 |   |   |   `-- description.component.ts
-|   |   |-- game.ts*
-|   |   |-- user/
-|   |   |   |-- user.component.css
-|   |   |   |-- user.component.html
-|   |   |   |-- user.component.spec.ts
-|   |   |   `-- user.component.ts
-|   |   `-- user.ts
+|   |   `-- user/
+|   |       |-- user.component.css
+|   |       |-- user.component.html
+|   |       |-- user.component.spec.ts
+|   |       `-- user.component.ts
 |   |-- assets/
 |   |-- browserslist
+|   |-- classes/
+|   |   |-- game.ts*
+|   |   `-- user.ts
 |   |-- environments/
 |   |   |-- environment.prod.ts
 |   |   `-- environment.ts
 |   |-- favicon.ico
-|   |-- game.ts
 |   |-- index.html
 |   |-- karma.conf.js
 |   |-- main.ts
@@ -116,9 +118,11 @@ Includes infoprmation about selected game
 |   |-- tsconfig.spec.json
 |   `-- tslint.json
 |-- test\ server/
+|   |-- README_for_testserver.md
 |   |-- index.js
 |   `-- package.json
 |-- tsconfig.json
 `-- tslint.json
+
 
 ```
