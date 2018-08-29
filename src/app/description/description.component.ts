@@ -8,7 +8,7 @@ import { Game } from '../../classes/game';
 	selector: 'app-description',
 	templateUrl: './description.component.html',
 	styleUrls: ['./description.component.css']
-});
+})
 export class DescriptionComponent implements OnInit {
 
 	games : Game[] = [
