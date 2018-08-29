@@ -6,7 +6,7 @@ This project is a web application for switch gamers. It allows them to track gam
 
 ### Angular installation
 
-npm install -g @angular/cli
+`npm install -g @angular/cli`
 
 ### Development server
 
