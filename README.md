@@ -34,6 +34,68 @@ Includes user bio and game list
 
 Includes infoprmation about selected game
 
+### Current Folder Structure
+
+```
+.
+|-- README.md
+|-- angular.json
+|-- database/
+|   `-- mygameslist.sql
+|-- gameposter.jpg
+|-- package-lock.json
+|-- package.json
+|-- roflandeze.png*
+|-- src/
+|   |-- app/
+|   |   |-- app-routing.module.spec.ts
+|   |   |-- app-routing.module.ts
+|   |   |-- app.component.css
+|   |   |-- app.component.html
+|   |   |-- app.component.spec.ts
+|   |   |-- app.component.ts
+|   |   |-- app.module.ts
+|   |   |-- dashboard/
+|   |   |   |-- dashboard.component.css
+|   |   |   |-- dashboard.component.html
+|   |   |   |-- dashboard.component.spec.ts
+|   |   |   `-- dashboard.component.ts
+|   |   |-- description/
+|   |   |   |-- description.component.css
+|   |   |   |-- description.component.html
+|   |   |   |-- description.component.spec.ts
+|   |   |   `-- description.component.ts
+|   |   |-- game.ts*
+|   |   |-- user/
+|   |   |   |-- user.component.css
+|   |   |   |-- user.component.html
+|   |   |   |-- user.component.spec.ts
+|   |   |   `-- user.component.ts
+|   |   `-- user.ts
+|   |-- assets/
+|   |-- browserslist
+|   |-- environments/
+|   |   |-- environment.prod.ts
+|   |   `-- environment.ts
+|   |-- favicon.ico
+|   |-- game.ts
+|   |-- index.html
+|   |-- karma.conf.js
+|   |-- main.ts
+|   |-- polyfills.ts
+|   |-- styles.css
+|   |-- test.ts
+|   |-- tsconfig.app.json
+|   |-- tsconfig.spec.json
+|   `-- tslint.json
+|-- test\ server/
+|   |-- index.js
+|   `-- package.json
+|-- tsconfig.json
+`-- tslint.json
+
+```
+
 ## To Do
 
     1. Connect application and SQLite database
