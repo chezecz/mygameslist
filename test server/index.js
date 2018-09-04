@@ -107,8 +107,37 @@ const MainRootResolver = new GraphQLObjectType({
 	})
 });
 
+const MainRootMutation = new GraphQLObjectType({
+	name: "RootMutation",
+	fields: () => ({
+		newuser: {
+			type: UserSchema,
+			args: {
+				id: {
+					type: new GraphQLNonNull(GraphQLInt)
+				},
+				name: {
+					type: new GraphQLNonNull(GraphQLString)
+				}
+			},
+			resolve: function(root, args, context) {
+				userid = args.id
+				username = args.name
+				return User.update({
+					username: username
+				},
+				{
+					userid: userid
+				}).then(result => {return result})
+				.catch(err => console.log(err))
+			}
+		}
+	})
+});
+
 const MainSchema = new GraphQLSchema({
-	query: MainRootResolver
+	query: MainRootResolver,
+	mutation: MainRootMutation
 });
 
 // Setting up Sequelize object for sqlite3 database
