@@ -22,20 +22,21 @@ const app = express();
 
 // GraphQL Schema
 
-const UserSchema = new GraphQLObjectType({
-
+var UserSchema = new GraphQLObjectType({
 	name: "User",
 	fields: () => ({
-		id: {type: new GraphQLNonNull(GraphQLInt)},
-		name: {type: GraphQLString}
+		userid: {type: new GraphQLNonNull(GraphQLInt)},
+		username: {type: GraphQLString}
 	})
 });
 
 const GameSchema = new GraphQLObjectType({
 	name: "Game",
 	fields: () => ({
-		id: {type: new GraphQLNonNull(GraphQLInt)},
-		name: {type: GraphQLString}
+		gameid: {type: new GraphQLNonNull(GraphQLInt)},
+		gamename: {type: GraphQLString},
+		gamedesc: {type: GraphQLString},
+		releasedate: {type: GraphQLString}
 	})
 });
 
@@ -62,17 +63,17 @@ const MainRootResolver = new GraphQLObjectType({
 		users: {
 			type: new GraphQLList(UserSchema),
 			resolve: function() {
-				return (User.findAll().then(users => {
-							console.log(users)
-						}))
+				return User.findAll().then(users => {
+					return users
+				})
 			}
 		},
 		games: {
 			type: new GraphQLList(GameSchema),
 			resolve: function() {
-				return (Game.findAll().then(games => {
-							console.log(games)
-						}))
+				return Game.findAll().then(games => {
+					return games
+					})
 			}
 		},
 		user: {
@@ -83,20 +84,23 @@ const MainRootResolver = new GraphQLObjectType({
 				}
 			},
 			resolve: function(root, args, context) {
-				console.log(args)
 				userid = args.id
 				return User.findOne({where: {userid}}).then(user => {
-					console.log("Username: " + user.get('username'))
-					new UserSchema(user)
+					return user.get({plain: true})
 				})
 			}
 		},
 		game: {
-			type: GraphQLString,
-			resolve: function() {
-				gameid = 7
-				return Game.findOne({where: {gameid}}).then(game => {
-					console.log(game.get('gamename'))
+			type: GameSchema,
+			args: {
+				id: {
+					type: new GraphQLNonNull(GraphQLInt)
+				}
+			},
+			resolve: function(root, args, context) {
+				id = args.id
+				return Game.findById(id).then(game => {
+					return game.get({plain: true})
 				})
 			}
 		}
@@ -113,6 +117,7 @@ const sequelize = new Sequelize('database', null, null, {
 	host: 'localhost',
 	dialect: 'sqlite',
 	operatorsAliases: false,
+	logging: false,
 	pool: {
 		max: 5,
 		min: 0,
@@ -121,17 +126,6 @@ const sequelize = new Sequelize('database', null, null, {
 	},
 	storage: 'gamesdatabase.db'
 });
-
-// Testing Connection
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
 
 // Database Schemas
 
@@ -249,35 +243,11 @@ Game.hasMany(List, {foreignKey: 'gameid'});
 List.belongsTo(UserList, {foreignKey: 'listid'});
 UserList.hasMany(List, {foreignKey: 'listid'});
 
-// Queries
-
-User.findOne().then(user => {
-	console.log(user.get('username'));
-})
-
-Game.findOne().then(game => {
-	console.log(game.get('gamename'));
-})
-
-User.findAll().then(users => {
-	console.log(users);
-})
-
-// Sequelize Sync
-
-sequelize
-  .sync({ force: false })
-  .then(function(err) {
-    console.log('It worked!');
-  }, function (err) {
-    console.log('An error occurred while creating the table:', err);
-  });
-
 // App Routing
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
-app.listen(3000, () => console.log('Server activated'));
+app.listen(4000, () => console.log('Server activated'));
 
 // GraphQL Interactive Interface
 
