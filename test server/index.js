@@ -118,16 +118,62 @@ const MainRootMutation = new GraphQLObjectType({
 				},
 				name: {
 					type: new GraphQLNonNull(GraphQLString)
+				},
+				password: {
+					type: new GraphQLNonNull(GraphQLString)
 				}
 			},
 			resolve: function(root, args, context) {
+				for (var stuff in Account) {
+					console.log(stuff + ": " + Account[stuff])
+				}
 				userid = args.id
 				username = args.name
-				return User.update({
-					username: username
+				password = args.password
+				return User.create({
+					username: username,
+					userid: userid,
+					password: {
+						userid: userid,
+						password: password
+					}
 				},
 				{
-					userid: userid
+					include: [{
+						model: Password,
+						assosiation: Account
+					}]
+				}
+				).then(result => {return result})
+				.catch(err => console.log(err))
+			}
+		},
+		newgame: {
+			type: GameSchema,
+			args: {
+				id: {
+					type: new GraphQLNonNull(GraphQLInt)
+				},
+				name: {
+					type: new GraphQLNonNull(GraphQLString)
+				},
+				description: {
+					type: new GraphQLNonNull(GraphQLString)
+				},
+				releasedate: {
+					type: new GraphQLNonNull(GraphQLString)
+				}
+			},
+			resolve: function(root, args, context) {
+				gameid = args.id
+				gamename = args.name
+				gamedesc = args.description
+				releasedate = args.releasedate
+				return Game.create({
+					gameid: gameid,
+					gamename: gamename,
+					gamedesc: gamedesc,
+					releasedate: releasedate
 				}).then(result => {return result})
 				.catch(err => console.log(err))
 			}
@@ -146,7 +192,10 @@ const sequelize = new Sequelize('database', null, null, {
 	host: 'localhost',
 	dialect: 'sqlite',
 	operatorsAliases: false,
-	logging: false,
+	// logging: false,
+	define: {
+		timestamps: false
+	},
 	pool: {
 		max: 5,
 		min: 0,
@@ -220,7 +269,7 @@ const UserList = sequelize.define('userlist', {
 		type: Sequelize.INTEGER,
 		field: 'listid',
 		primaryKey: true
-	}
+	},
 });
 
 // Lists table
@@ -239,28 +288,14 @@ const List = sequelize.define('list', {
 // Removing Default Sequelize Attirubutes
 
 User.removeAttribute('id');
-User.removeAttribute('createdAt');
-User.removeAttribute('updatedAt');
-
 Password.removeAttribute('id');
-Password.removeAttribute('createdAt');
-Password.removeAttribute('updatedAt');
-
 Game.removeAttribute('id');
-Game.removeAttribute('createdAt');
-Game.removeAttribute('updatedAt');
-
 UserList.removeAttribute('id');
-UserList.removeAttribute('createdAt');
-UserList.removeAttribute('updatedAt');
-
 List.removeAttribute('id');
-List.removeAttribute('createdAt');
-List.removeAttribute('updatedAt');
 
 // Defining Foreign Keys
 
-Password.belongsTo(User, {foreignKey: 'userid'});
+var Account = Password.belongsTo(User, {foreignKey: 'userid'});
 User.hasOne(Password, {foreignKey: 'userid'});
 
 UserList.belongsTo(User, {foreignKey: 'userid'});
@@ -271,6 +306,8 @@ Game.hasMany(List, {foreignKey: 'gameid'});
 
 List.belongsTo(UserList, {foreignKey: 'listid'});
 UserList.hasMany(List, {foreignKey: 'listid'});
+
+sequelize.sync()
 
 // App Routing
 
