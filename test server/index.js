@@ -4,6 +4,7 @@ const express = require('express');
 const express_graphql = require('express-graphql');
 const sqlite3 = require('sqlite3').verbose();
 const Sequelize = require('sequelize');
+const cors = require('cors');
 
 // Importing GraphQL Objects
 
@@ -235,7 +236,7 @@ const sequelize = new Sequelize('database', null, null, {
 	host: 'localhost',
 	dialect: 'sqlite',
 	operatorsAliases: false,
-	logging: false,
+	// logging: false,
 	define: {
 		timestamps: false
 	},
@@ -354,6 +355,8 @@ sequelize.sync()
 
 // App Routing
 
+app.use(cors());
+
 app.get('/', (req, res) => res.send('Hello World!'));
 
 app.listen(4000, () => console.log('Server activated'));
@@ -363,6 +366,11 @@ app.listen(4000, () => console.log('Server activated'));
 app.use('/graphql', express_graphql({
 	schema: MainSchema,
 	graphiql: true
+}));
+
+app.use('/graph', express_graphql({
+	schema: MainSchema,
+	graphiql: false
 }));
 
 // Error handling for invalid requests
