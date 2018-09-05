@@ -22,11 +22,28 @@ const app = express();
 
 // GraphQL Schema
 
-var UserSchema = new GraphQLObjectType({
+const UserSchema = new GraphQLObjectType({
 	name: "User",
 	fields: () => ({
 		userid: {type: new GraphQLNonNull(GraphQLInt)},
-		username: {type: GraphQLString}
+		username: {type: GraphQLString},
+		password: {
+			type: PasswordSchema,
+			resolve: function(root, args, context) {
+				userid = root.userid
+				return Password.findOne({where: {userid}}).then(password => {
+					return password.get({plain: true})
+				})
+			} 
+		}
+	})
+});
+
+const PasswordSchema = new GraphQLObjectType({
+	name: "Password",
+	fields: () => ({
+		userid: {type: new GraphQLNonNull(GraphQLInt)},
+		password: {type: GraphQLString}
 	})
 });
 
@@ -103,6 +120,35 @@ const MainRootResolver = new GraphQLObjectType({
 					return game.get({plain: true})
 				})
 			}
+		},
+		checkuser: {
+			type: UserSchema,
+			args: {
+				name: {
+					type: new GraphQLNonNull(GraphQLString)
+				},
+				password: {
+					type: new GraphQLNonNull(GraphQLString)
+				}
+			},
+			resolve: function(root, args, context) {
+				username = args.name
+				password = args.password
+				return User.findAll({
+					where: {
+						username: username
+					},
+					include: [{
+						model: Password,
+						assosiation: Account
+					}]
+				}).then(result => {
+					for (var user in result) {
+						console.log(result[user].get({plain: true}))
+						return result[user].get({plain: true})
+					}
+				})
+			}
 		}
 	})
 });
@@ -124,9 +170,6 @@ const MainRootMutation = new GraphQLObjectType({
 				}
 			},
 			resolve: function(root, args, context) {
-				for (var stuff in Account) {
-					console.log(stuff + ": " + Account[stuff])
-				}
 				userid = args.id
 				username = args.name
 				password = args.password
@@ -192,7 +235,7 @@ const sequelize = new Sequelize('database', null, null, {
 	host: 'localhost',
 	dialect: 'sqlite',
 	operatorsAliases: false,
-	// logging: false,
+	logging: false,
 	define: {
 		timestamps: false
 	},
