@@ -236,7 +236,7 @@ const sequelize = new Sequelize('database', null, null, {
 	host: 'localhost',
 	dialect: 'sqlite',
 	operatorsAliases: false,
-	// logging: false,
+	logging: false,
 	define: {
 		timestamps: false
 	},
@@ -246,7 +246,7 @@ const sequelize = new Sequelize('database', null, null, {
 		acquire: 30000,
 		idle: 10000
 	},
-	storage: 'gamesdatabase.db'
+	storage: '../database/gamesdatabase.db'
 });
 
 // Database Schemas
