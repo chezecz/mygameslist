@@ -61,13 +61,29 @@ const GameSchema = new GraphQLObjectType({
 const ListSchema = new GraphQLObjectType({
 	name: "List",
 	fields: () => ({
-		id: {type: GraphQLInt},
+		listid: {type: GraphQLInt},
 		user: {
 			type: UserSchema,
 			resolve: function(list) {
-				return (Game.findOne().then(game => {
-						console.log(game.get('gamename'));
-						}))
+				return User.findById(userid).then(list => {
+						return list
+					})
+			}
+		}
+	})
+});
+
+const ListGameSchema = new GraphQLObjectType({
+	name: "ListGame",
+	fields: () => ({
+		listid: {type: GraphQLInt},
+		gameid: {type: GraphQLInt},
+		game: {
+			type: GameSchema,
+			resolve: function(game) {
+				return Game.findById(game.gameid).then(games => {
+					return games
+				})
 			}
 		}
 	})
@@ -122,6 +138,45 @@ const MainRootResolver = new GraphQLObjectType({
 				})
 			}
 		},
+		lists: {
+			type: new GraphQLList(ListSchema),
+			args: {
+				id: {
+					type: new GraphQLNonNull(GraphQLInt)
+				}
+			},
+			resolve: function(root, args, context) {
+				userid = args.id
+				return UserList.findAll({
+					where: {
+						userid: userid
+					}}).then(lists => {
+						return lists
+					})
+			}
+		},
+		listgames: {
+			type: new GraphQLList(ListGameSchema),
+			args: {
+				id: {
+					type: new GraphQLNonNull(GraphQLInt)
+				}
+			},
+			resolve: function(root, args, context) {
+				listid = args.id
+				return List.findAll({
+					where: {
+						listid: listid
+					},
+					include: [{
+						model: Game,
+						assosiation: GameAcc
+					}]
+				}).then(result => {
+					return result
+				})
+			}
+		},
 		checkuser: {
 			type: UserSchema,
 			args: {
@@ -129,7 +184,7 @@ const MainRootResolver = new GraphQLObjectType({
 					type: new GraphQLNonNull(GraphQLString)
 				},
 				password: {
-					type: new GraphQLNonNull(GraphQLString)
+					type: GraphQLString
 				}
 			},
 			resolve: function(root, args, context) {
@@ -145,7 +200,6 @@ const MainRootResolver = new GraphQLObjectType({
 					}]
 				}).then(result => {
 					for (var user in result) {
-						console.log(result[user].get({plain: true}))
 						return result[user].get({plain: true})
 					}
 				})
@@ -343,9 +397,9 @@ var Account = Password.belongsTo(User, {foreignKey: 'userid'});
 User.hasOne(Password, {foreignKey: 'userid'});
 
 UserList.belongsTo(User, {foreignKey: 'userid'});
-User.hasMany(List, {foreignKey: 'userid'});
+User.hasMany(UserList, {foreignKey: 'userid'});
 
-List.belongsTo(Game, {foreignKey: 'gameid'});
+var GameAcc = List.belongsTo(Game, {foreignKey: 'gameid'});
 Game.hasMany(List, {foreignKey: 'gameid'});
 
 List.belongsTo(UserList, {foreignKey: 'listid'});
