@@ -17,16 +17,29 @@ export class UniversalService {
   list: List;
   game: Game;
   user: User;
-  private querySubscription: Observable<any>;
 
   constructor(private apollo: Apollo) { }
 
-  getList(): Observable<any> {
-  	return ;
+  getList(id): Observable<any> {
+  	const currentQuery = gql`
+  		query ($id: Int!) {
+  			lists (id: $id) {
+    			listid
+    			user {
+      				username
+    			}
+  			}
+  		}
+  	`;
+  	return this.apollo.watchQuery<any>({
+  		query: currentQuery,
+  		variables: {
+  			id
+  		},
+  	}).valueChanges
   }
 
   getUser(id): Observable<any> {
-  	console.log(id)
   	const currentQuery = gql`
   		query ($id: Int!) {
   			user (id: $id) {
@@ -43,44 +56,42 @@ export class UniversalService {
   	}).valueChanges
   }
 
-  // getGame(): void {
-  // 	var id = 2;
-  // 	const currentQuery = gql`
-  // 		query ($id: Int!) {
-  // 			game (id: $id) {
-  // 				gamename
-  // 				gamedesc
-  // 			}
-  // 		}
-  // 	`;
-  // 	this.querySubscription = this.apollo.watchQuery<any>({
-  // 		query: currentQuery,
-  // 		variables: {
-  // 			id
-  // 		},
-  // 	}).valueChanges.subscribe(({data}) => {
-  // 		this.game = data
-  // 	});
-  // }
+  getGame(id): Observable<any>  {
+  	const currentQuery = gql`
+  		query ($id: Int!) {
+  			game (id: $id) {
+  				gamename
+  				gamedesc
+  				gameid
+  			}
+  		}
+  	`;
+  	return this.apollo.watchQuery<any>({
+  		query: currentQuery,
+  		variables: {
+  			id
+  		},
+  	}).valueChanges
+  }
 
-  // getGames(): void {
-  // 	var id = 2;
-  // 	const currentQuery = gql`
-  // 		query ($id: Int!) {
-  // 			game (id: $id) {
-  // 				gamename
-  // 				gamedesc
-  // 			}
-  // 		}
-  // 	`;
-  // 	this.querySubscription = this.apollo.watchQuery<any>({
-  // 		query: currentQuery,
-  // 		variables: {
-  // 			id
-  // 		},
-  // 	}).valueChanges.subscribe(({data}) => {
-  // 		this.game = data
-  // 	});
-  // }
+  getGames(id): Observable<any>  {
+  	const currentQuery = gql`
+  		query ($id: Int!) {
+  			listgames (id: $id) {
+    			game {
+      				gamename
+      				gamedesc
+      				gameid
+    			}
+  			}
+  		}
+  	`;
+  	return this.apollo.watchQuery<any>({
+  		query: currentQuery,
+  		variables: {
+  			id
+  		},
+  	}).valueChanges
+  }
 
 }

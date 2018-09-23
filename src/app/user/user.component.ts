@@ -26,18 +26,15 @@ export class UserComponent implements OnInit {
 
 	id: number;
 
-	user: User = {
-		id: 0,
-		name: ""
-	};
+	user: User;
 
 	games: Game[];
 
 	ngOnInit() {
-		// console.log(this.user);
 		this.getId();
 		this.getUser();
-		// this.getList();
+		this.getList();
+		this.getGames();
 	}
 
 	getId(): void {
@@ -50,14 +47,20 @@ export class UserComponent implements OnInit {
 
 	getUser(): void {
 		this.universalService.getUser(this.id).subscribe(user => {
-			this.user.id = user.data.user["userid"]
-			this.user.name = user.data.user["username"]
-			console.log(this.user)
+			this.user = user.data.user
 		});
 	}
 
-	// getList(): void {
-	// 	this.games = this.listService.getGames().subscribe(games => this.games = games);
-	// }
+	getList(): void {
+		this.universalService.getList(this.id).subscribe(list => {
+			console.log(list.data)
+		});
+	}
+
+	getGames(): void {
+		this.universalService.getGames(this.id).subscribe(games => {
+			this.games = games.data.listgames
+		});
+	}
 
 }

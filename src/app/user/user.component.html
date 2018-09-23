@@ -1,21 +1,21 @@
-<div class="profile">
+<div class="profile" *ngIf="user">
 
 <img src="../../../img/roflandeze.png">
 
-<h3>{{user.name}} Profile</h3>
+<h3>{{user.username}} Profile</h3>
 <p>here is a place for user stats</p>
 <p>place for description</p>
 <button class='profileButtons'>Update Profile</button>
 <button class='profileButtons'>Check Game List</button>
 </div>
-<div class="list">
-	<h2>{{user.name}} List</h2>
+<div class="list" *ngIf="user">
+	<h2>{{user.username}} List</h2>
 <ul class="gameList">
   <li *ngFor="let game of games">
-    <a routerLink="/game/{{game.id}}">
-      {{game.name}}
+    <a routerLink="/game/{{game.game.gameid}}">
+      {{game.game.gamename}}
     </a>
-    <p class='gameDescription'>{{game.description}}</p>
+    <p class='gameDescription'>{{game.game.gamedesc}}</p>
   </li>
 </ul>
 <div>
