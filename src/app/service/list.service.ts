@@ -4,12 +4,18 @@ import { Observable, of } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
-import { Game } from '../../classes/game';
+import { List } from '../../classes/list';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GameService {
+export class ListService {
+
+  list: List;
 
   constructor() { }
+
+  getList(): void {
+  	return;
+  }
 }

@@ -5,6 +5,11 @@ import { Location } from '@angular/common';
 import { Game } from '../../classes/game';
 import { User } from '../../classes/user';
 
+import { UniversalService } from '../service/universal.service';
+
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 @Component({
 	selector: 'app-user',
 	templateUrl: './user.component.html',
@@ -14,53 +19,45 @@ export class UserComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+		private universalService: UniversalService,
+		private apollo: Apollo
 		) {}
 
-	user: User[] = [
-	{
-		id: 1, name: "EternalDeze"
-	},
-	{
-		id: 2, name: "KKomrade"
-	},
-	{
-		id: 3, name: "NintendoNumberOneFan"
-	}]
+	id: number;
 
-	games: Game[] = [
-	{
-		id: 1, name: "Mario Odyssey", description: "Platformer & Adventure"
-	},
-	{
-		id: 2, name: "Breath of the Wild", description: "Adventure"
-	},
-	{
-		id: 3, name: "Skyrim", description: "RPG Adventure"
-	},
-	{
-		id: 4, name: "Octopath Traveler", description: "JRPG"
-	},
-	{
-		id: 5, name: "Dead Cells", description: "Rogue-lite"
-	},
-	{
-		id: 6, name: "Sonic Mania", description: "2D Platformer"
-	},
-	{
-		id: 7, name: "Hollow Knight", description: "Metroidvania"
-	}]
+	user: User = {
+		id: 0,
+		name: ""
+	};
+
+	games: Game[];
 
 	ngOnInit() {
+		// console.log(this.user);
+		this.getId();
 		this.getUser();
-}
+		// this.getList();
+	}
 
-	getUser(): void {
-		const id = +this.route.snapshot.paramMap.get('id');
+	getId(): void {
+		this.id = +this.route.snapshot.paramMap.get('id')
 	}
 
 	back(): void {
 		this.location.back();
 	}
+
+	getUser(): void {
+		this.universalService.getUser(this.id).subscribe(user => {
+			this.user.id = user.data.user["userid"]
+			this.user.name = user.data.user["username"]
+			console.log(this.user)
+		});
+	}
+
+	// getList(): void {
+	// 	this.games = this.listService.getGames().subscribe(games => this.games = games);
+	// }
 
 }
