@@ -17,13 +17,15 @@ export class DashboardComponent implements OnInit {
 		
 	}
 
+	title = "Week 9";
+
 	user: User[];
 
 	buttonClick() {
 		
 	}
 
-	title = "MyGameList";
+	// title = "MyGameList";
 
 	ngOnInit() {
 		
