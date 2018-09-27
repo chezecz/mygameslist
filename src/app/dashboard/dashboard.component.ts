@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { UniversalService } from '../service/universal.service';
 
 import { User } from '../../classes/user';
 
@@ -13,19 +15,22 @@ export class DashboardComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
+		private universalService: UniversalService
 	) { 
 		
 	}
 
-	title = "Week 9";
-
-	user: User[];
+	@Input() user: User = {
+		name: "",
+		id: null,
+		password: ""
+	};
 
 	buttonClick() {
-		
+		this.universalService.setUser(this.user.name, this.user.password)
 	}
 
-	// title = "MyGameList";
+	title = "MyGameList";
 
 	ngOnInit() {
 		

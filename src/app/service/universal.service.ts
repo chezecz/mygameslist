@@ -94,4 +94,20 @@ export class UniversalService {
   	}).valueChanges
   }
 
+  setUser(name, password): void {
+  	const currentMutation = gql`
+  		mutation($name: String!, $password: String!) {
+  			newuser(name: $name, password: $password) {
+  				username
+  			}
+  		}
+  	`;
+  	this.apollo.mutate({
+  		mutation: currentMutation,
+  		variables: {
+  			name,
+  			password
+  		}
+  	}).subscribe()
+  }
 }

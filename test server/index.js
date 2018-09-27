@@ -214,9 +214,6 @@ const MainRootMutation = new GraphQLObjectType({
 		newuser: {
 			type: UserSchema,
 			args: {
-				id: {
-					type: new GraphQLNonNull(GraphQLInt)
-				},
 				name: {
 					type: new GraphQLNonNull(GraphQLString)
 				},
@@ -225,33 +222,31 @@ const MainRootMutation = new GraphQLObjectType({
 				}
 			},
 			resolve: function(root, args, context) {
-				userid = args.id
 				username = args.name
 				password = args.password
 				return User.create({
 					username: username,
-					userid: userid,
-					password: {
-						userid: userid,
-						password: password
-					}
+					// password: {
+					// 	password: password
+					// }
 				},
-				{
-					include: [{
-						model: Password,
-						assosiation: Account
-					}]
-				}
-				).then(result => {return result})
+				// {
+				// 	include: [{
+				// 		model: Password,
+				// 		assosiation: Account
+				// 	}]
+				// }
+				).then(result => {return Password.create({
+					userid: result.userid,
+					password: password
+				})})
+				.then(result => {return null})
 				.catch(err => console.log(err))
 			}
 		},
 		newgame: {
 			type: GameSchema,
 			args: {
-				id: {
-					type: new GraphQLNonNull(GraphQLInt)
-				},
 				name: {
 					type: new GraphQLNonNull(GraphQLString)
 				},
@@ -263,12 +258,10 @@ const MainRootMutation = new GraphQLObjectType({
 				}
 			},
 			resolve: function(root, args, context) {
-				gameid = args.id
 				gamename = args.name
 				gamedesc = args.description
 				releasedate = args.releasedate
 				return Game.create({
-					gameid: gameid,
 					gamename: gamename,
 					gamedesc: gamedesc,
 					releasedate: releasedate
@@ -315,7 +308,8 @@ const User = sequelize.define('user', {
 	userid: {
 		type: Sequelize.INTEGER,
 		field: 'userid',
-		primaryKey: true
+		primaryKey: true,
+		autoIncrement: true
 	}
 }, {
 	tableName: 'users'
@@ -326,7 +320,8 @@ const User = sequelize.define('user', {
 const Password = sequelize.define('password', {
 	userid: {
 		type: Sequelize.INTEGER,
-		field: 'userid'
+		field: 'userid',
+		primaryKey: true
 	},
 	password: {
 		type: Sequelize.STRING,
@@ -361,7 +356,8 @@ const Game = sequelize.define('game', {
 const UserList = sequelize.define('userlist', {
 	userid: {
 		type: Sequelize.INTEGER,
-		field: 'userid'
+		field: 'userid',
+		primaryKey: true
 	},
 	listid: {
 		type: Sequelize.INTEGER,
@@ -375,21 +371,15 @@ const UserList = sequelize.define('userlist', {
 const List = sequelize.define('list', {
 	listid: {
 		type: Sequelize.INTEGER,
-		field: 'listid'
+		field: 'listid',
+		primaryKey: true
 	},
 	gameid: {
 		type: Sequelize.INTEGER,
-		field: 'gameid'
+		field: 'gameid',
+		primaryKey: true
 	}
 });
-
-// Removing Default Sequelize Attirubutes
-
-User.removeAttribute('id');
-Password.removeAttribute('id');
-Game.removeAttribute('id');
-UserList.removeAttribute('id');
-List.removeAttribute('id');
 
 // Defining Foreign Keys
 
@@ -436,18 +426,4 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
 	console.eroor(err.stack)
 	res.status(500).send('Whoops')
-});
-
-// Possible usefull in the future
-
-app.post('/post', function (req, res) {
-	res.send('POST')
-});
-
-app.put('/put', function (req, res) {
-	res.send('put request')
-});
-
-app.delete('/delete', function (req, res) {
-	res.send('delete request')
 });

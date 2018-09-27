@@ -1,8 +1,7 @@
 <h2>{{title}}</h2>
-<head><title>Week 9</title></head>
 
 <div>
 	<label>Username: <input [(ngModel)]="user.name" placeholder="Username"></label><br/>
 	<label>Password: <input [(ngModel)]="user.password" placeholder="Password"></label><br/>
-	<button class="submit">Submit</button>
+	<button class="submit" (click) = buttonClick()>Submit</button>
 </div>
