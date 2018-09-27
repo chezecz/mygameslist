@@ -309,7 +309,6 @@ const sequelize = new Sequelize('database', null, null, {
 		idle: 10000
 	},
 	storage: __dirname+'/../database/gamesdatabase.db'
-	// storage: '../database/gamesdatabase.db'
 });
 
 // Database Schemas
@@ -410,7 +409,7 @@ Game.hasMany(List, {foreignKey: 'gameid'});
 List.belongsTo(UserList, {foreignKey: 'listid'});
 UserList.hasMany(List, {foreignKey: 'listid'});
 
-sequelize.sync()
+sequelize.sync({force: false})
 
 // App Routing
 
