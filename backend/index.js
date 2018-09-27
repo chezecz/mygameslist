@@ -433,6 +433,12 @@ app.use('/graph', express_graphql({
 	graphiql: false
 }));
 
+// Redirect to any Route
+
+app.get("*", (req, res) => {
+    res.redirect("/")
+})
+
 // Error handling for invalid requests
 
 app.use(function (req, res, next) {
