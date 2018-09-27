@@ -268,6 +268,20 @@ const MainRootMutation = new GraphQLObjectType({
 				}).then(result => {return result})
 				.catch(err => console.log(err))
 			}
+		},
+		newlist: {
+			type: ListSchema,
+			args: {
+				id: {
+					type: new GraphQLNonNull(GraphQLInt)
+				}
+			},
+			resolve: function(root, args, context) {
+				userid = args.id
+				return UserList.create({
+					userid: userid
+				}).then(result => {return result})
+			}
 		}
 	})
 });
@@ -283,7 +297,7 @@ const sequelize = new Sequelize('database', null, null, {
 	host: 'localhost',
 	dialect: 'sqlite',
 	operatorsAliases: false,
-	logging: false,
+	// logging: false,
 	define: {
 		timestamps: false
 	},
@@ -356,8 +370,7 @@ const Game = sequelize.define('game', {
 const UserList = sequelize.define('userlist', {
 	userid: {
 		type: Sequelize.INTEGER,
-		field: 'userid',
-		primaryKey: true
+		field: 'userid'
 	},
 	listid: {
 		type: Sequelize.INTEGER,
