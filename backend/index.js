@@ -1,6 +1,7 @@
 // Importing Libraries
 
 const express = require('express');
+const path = require('path');
 const express_graphql = require('express-graphql');
 const sqlite3 = require('sqlite3').verbose();
 const Sequelize = require('sequelize');
@@ -297,7 +298,7 @@ const sequelize = new Sequelize('database', null, null, {
 	host: 'localhost',
 	dialect: 'sqlite',
 	operatorsAliases: false,
-	// logging: false,
+	logging: false,
 	define: {
 		timestamps: false
 	},
@@ -307,7 +308,8 @@ const sequelize = new Sequelize('database', null, null, {
 		acquire: 30000,
 		idle: 10000
 	},
-	storage: '../database/gamesdatabase.db'
+	storage: __dirname+'/../database/gamesdatabase.db'
+	// storage: '../database/gamesdatabase.db'
 });
 
 // Database Schemas
@@ -414,7 +416,9 @@ sequelize.sync()
 
 app.use(cors());
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.use(express.static(__dirname+'/../'));
+
+app.use('/', express.static(__dirname+'/../dist/mygameslist/'));
 
 app.listen(4000, () => console.log('Server activated'));
 
@@ -437,6 +441,6 @@ app.use(function (req, res, next) {
 });
 
 app.use(function (err, req, res, next) {
-	console.eroor(err.stack)
+	console.error(err.stack)
 	res.status(500).send('Whoops')
 });
