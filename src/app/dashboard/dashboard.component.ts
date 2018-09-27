@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { UniversalService } from '../service/universal.service';
 
 import { User } from '../../classes/user';
+import { Game } from '../../classes/game';
 
 @Component({
 	selector: 'app-dashboard',
@@ -20,23 +21,39 @@ export class DashboardComponent implements OnInit {
 		
 	}
 
+	games: Game[];
+	users: User[];
+
 	@Input() user: User = {
 		name: "",
 		id: null,
 		password: ""
 	};
 
-	buttonClick() {
+	buttonClick(): void {
 		this.universalService.setUser(this.user.name, this.user.password)
 	}
 
 	title = "MyGameList";
 
 	ngOnInit() {
-		
+		this.getGames();
+		this.getUsers();
 	}
 
 	query(): void {
 		
+	}
+
+	getGames(): void {
+		this.universalService.getAllGames().subscribe(games => {
+			this.games = games.data.games
+		});
+	}
+
+	getUsers(): void {
+		this.universalService.getAllUsers().subscribe(users => {
+			this.users = users.data.users
+		});
 	}
 }

@@ -110,4 +110,30 @@ export class UniversalService {
   		}
   	}).subscribe()
   }
+
+  getAllUsers(): Observable<any> {
+    const currentQuery = gql`
+    query {
+      users {
+        username
+        userid
+      }
+    }`;
+    return this.apollo.watchQuery<any>({
+      query: currentQuery
+    }).valueChanges
+  }
+
+  getAllGames(): Observable<any> {
+    const currentQuery = gql`
+    query {
+      games {
+        gamename
+        gameid
+      }
+    }`;
+    return this.apollo.watchQuery<any>({
+      query: currentQuery
+    }).valueChanges
+  }
 }

@@ -5,3 +5,23 @@
 	<label>Password: <input [(ngModel)]="user.password" placeholder="Password"></label><br/>
 	<button class="submit" (click) = buttonClick()>Submit</button>
 </div>
+
+<div *ngIf="users">
+	<ul class="userList">
+	  <li *ngFor="let user of users">
+	    <a routerLink="/user/{{user.userid}}">
+	      {{user.username}}
+	    </a>
+	  </li>
+	</ul>
+</div>
+
+<div *ngIf="games">
+	<ul class="gameList">
+	  <li *ngFor="let game of games">
+	    <a routerLink="/game/{{game.gameid}}">
+	      {{game.gamename}}
+	    </a>
+	  </li>
+	</ul>
+</div>
