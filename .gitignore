@@ -43,3 +43,8 @@ gamesdatabase.db
 /test server/mygameslist.sql
 /test server/node_modules/
 /test server/package-lock.json
+
+/backend/gamesdatabase.db
+/backend/mygameslist.sql
+/backend/node_modules/
+/backend/package-lock.json
