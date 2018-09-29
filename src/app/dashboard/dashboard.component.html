@@ -1,10 +1,15 @@
-<h2>{{title}}</h2>
-
-<div>
-	<label>Username: <input [(ngModel)]="user.name" placeholder="Username"></label><br/>
-	<label>Password: <input [(ngModel)]="user.password" placeholder="Password"></label><br/>
-	<button class="submit" (click) = buttonClick()>Submit</button>
+	<div class='dashboard_content'>
+    
+		<h2>{{title}}</h2>
+    
+		<div class='login_form'>
+			<label>Username: <input [(ngModel)]="user.name" placeholder="Username"></label><br/>
+	    <label>Password: <input [(ngModel)]="user.password" placeholder="Password"></label><br/>
+    	<button class="submit" (click) = buttonClick()>Submit</button>
+		</div>
+	</div>
 </div>
+
 
 <div *ngIf="users">
 	<ul class="userList">
