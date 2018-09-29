@@ -1,25 +1,40 @@
-<div class="profile" *ngIf="user">
-
-<img src="../../../img/roflandeze.png">
-
-<h3>{{user.username}} Profile</h3>
-<p>here is a place for user stats</p>
-<p>place for description</p>
-<button class='profileButtons'>Update Profile</button>
-<button class='profileButtons'>Check Game List</button>
-</div>
-<div class="list" *ngIf="user">
-	<h2>{{user.username}} List</h2>
-<ul class="gameList">
-  <li *ngFor="let game of games">
-    <a routerLink="/game/{{game.game.gameid}}">
-      {{game.game.gamename}}
-    </a>
-    <p class='gameDescription'>{{game.game.gamedesc}}</p>
-  </li>
-</ul>
-<div>
-
-<div class="footer">
-	<button class="footer-button" (click)="back()">Back</button>
+  <div class='user_content'>
+    <div class='left'>
+			<div class='user_overview'>
+				<h1>{{user.username}} Profile</h1>
+				<img class='user_pic' src='../../../img/roflandeze.png'>
+				<br>
+				<br>
+				<h3>here is a place for user stats</h3>
+				<br>
+				<span>RoflanEbalo</span>
+				<br>
+				<h3>place for description</h3>
+				<br>
+				<span>Tochno gru, RoflanEbalo</span>
+				<br>
+				<br>
+				<div class='user_button'>
+					<div class="btn-group">
+						<button>Update Profile</button>
+						<button>Check Game List</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class='right'>
+			<div class='user_list' *ngIf="user">
+				<h1>{{user.username}} List</h1>
+				<ul class='user_game_list'>
+          <li *ngFor="let game of games">
+            <a routerLink="/game/{{game.game.gameid}}">
+              {{game.game.gamename}}
+            </a>
+          </li>
+	      	<span class='genre'>{{game.game.gamedesc}}</span>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
