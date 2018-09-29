@@ -8,6 +8,10 @@ This project is a web application for switch gamers. It allows them to track gam
 
 `npm install -g @angular/cli`
 
+### Production server
+
+`npm start`
+
 ### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -36,7 +40,7 @@ Includes infoprmation about selected game
 
 ## To Do
 
-    1. Connect application and SQLite database
+    1. ~~Connect application and SQLite database~~
     2. Set up CSS styles
     3. Greate game lists
     4. Review code accoring to coding agreement
