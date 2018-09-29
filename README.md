@@ -40,7 +40,7 @@ Includes infoprmation about selected game
 
 ## To Do
 
-    1. ~~Connect application and SQLite database~~
+    ~~1. Connect application and SQLite database~~
     2. Set up CSS styles
     3. Greate game lists
     4. Review code accoring to coding agreement
