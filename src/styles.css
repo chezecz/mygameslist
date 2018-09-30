@@ -1,1 +1,227 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: fixedsys, consolas, monospace;
+	background-color: #000000;
+}
+
+
+/* GENERAL SETTING FOR COMMON ELEMENTS */
+.frame {
+	margin: 0;
+	padding: 0;
+	background-color: black;
+	height: 700px;
+}
+
+
+.left {
+	background-color: #000000;
+	width: 20%;
+	color: #ffb642;
+	float: left;
+	height: 100%;
+	
+}
+
+.right {
+	background-color: #282828;
+	color: #ffb642;
+	width: 80%;
+	float: left;
+	height: 100%;
+}
+
+.right span {
+	font-size: 14pt;
+}
+
+.user_pic {
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	
+	/*center alignning*/
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+/* NAVBAR CSS */
+.navbar {
+	background-color: #12dd93;
+	width: 100%;
+	float: left;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: #ffb642;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.navbar .active {
+    background-color: #ffb642;
+	color: #333333;
+	//border-style: solid;
+    //border-width: 2px;	
+	//border-color: #ffb642;
+	//padding: 12px 14px;
+}
+
+.navbar li a:hover {
+    border-style: solid;
+    border-width: 2px;	
+	padding: 12px 14px;
+	border-color: #ffb642;
+}
+
+
+
+
+
+/* USER AND GAME LISTS CSS */
+.user_content {
+	height: 100%;
+}
+.user_overview {
+	height: 100%;
+	color: #ffb642;
+	padding: 10px;
+}
+.user_overview h1 {
+	text-align: center;
+}
+.user_overview h3 {
+	text-align: center;
+}
+.user_list {
+	margin: 10px;
+	color: #ffb642;
+}
+.user_game_list a {
+	color: #ffb642;
+}
+
+.user_game_list {
+	color: #ff8842;;
+}
+
+.user_game_list li{
+	padding: 10px 20px;
+}
+
+.user_game_list span{
+	padding: 10px 20px;
+}
+
+
+
+
+/* BUTTONS GENERAL */
+.btn-group button {
+    background-color: #000000;
+    border: 2px solid #ffb642;
+    color: #ffb642;
+    padding: 5px 10px;
+    cursor: pointer; /* Pointer/hand icon */
+    float: left;
+	width: 50%;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:hover {
+	background-color: #ffb642;
+	color: #000000;
+}
+
+
+
+
+
+/* DASHBOARD OR INDEX.HTML CSS */
+.dashboard_content {
+	color: #ffb642;
+	float: left;
+	margin: auto;
+    width: 100%;
+    padding: auto;
+	text-align: center;
+}
+
+
+
+
+
+/* GAME DESCRIPTION CSS */
+.game_desc_content {
+	height: 100%;
+}
+
+.game_overview {
+	color: #ffb642;
+	float: left;
+	margin: auto;
+	text-align: center;
+}
+
+.game_description {
+	color: #ffb642;
+	float: left;
+	//text-align: center;
+	margin: 10px;
+}
+
+.game_button button {
+	background-color: #000000;
+    border: 2px solid #ffb642;
+    color: #ffb642;
+    padding: 5px 10px;
+    cursor: pointer; /* Pointer/hand icon */
+	width: 50%;
+	color: #ffb642;
+	margin: auto;
+}
+.game_button button:hover {
+	background-color: #ffb642;
+	color: #000000;
+}
+
+.right .game_description span {
+	text-align: left;
+}
+
+.right .game_description h1 {
+	text-align: center;
+}
+
+.right .game_description h4 {
+	text-align: center;
+}
