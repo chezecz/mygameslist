@@ -6,6 +6,8 @@ const express_graphql = require('express-graphql');
 const sqlite3 = require('sqlite3').verbose();
 const Sequelize = require('sequelize');
 const cors = require('cors');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 // Importing GraphQL Objects
 
@@ -410,6 +412,23 @@ List.belongsTo(UserList, {foreignKey: 'listid'});
 UserList.hasMany(List, {foreignKey: 'listid'});
 
 sequelize.sync({force: false})
+
+// Authorization
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
 
 // App Routing
 
