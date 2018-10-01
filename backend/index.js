@@ -26,7 +26,15 @@ const {
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
+    User.findOne({
+					where: {
+						username: username
+					},
+					include: [{
+						model: Password,
+						assosiation: Account
+					}]
+				}, function (err, user) {
       if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
@@ -40,11 +48,11 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user.userid);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+  User.findById(userid, function(err, user) {
     done(err, user);
   });
 });
@@ -201,8 +209,7 @@ const MainRootResolver = new GraphQLObjectType({
 						listid: listid
 					},
 					include: [{
-						model: Game,
-						assosiation: GameAcc
+						model: Game
 					}]
 				}).then(result => {
 					return result
@@ -222,7 +229,7 @@ const MainRootResolver = new GraphQLObjectType({
 			resolve: function(root, args, context) {
 				username = args.name
 				password = args.password
-				return User.findAll({
+				return User.findOne({
 					where: {
 						username: username
 					},
@@ -232,7 +239,7 @@ const MainRootResolver = new GraphQLObjectType({
 					}]
 				}).then(result => {
 					for (var user in result) {
-						return result[user].get({plain: true})
+						return result[user]
 					}
 				})
 			}
@@ -265,7 +272,7 @@ const MainRootMutation = new GraphQLObjectType({
 				// {
 				// 	include: [{
 				// 		model: Password,
-				// 		assosiation: Account
+				// 		association: Account
 				// 	}]
 				// }
 				).then(result => {return Password.create({
@@ -454,7 +461,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname+'/../'));
@@ -477,17 +484,18 @@ app.use('/graph', express_graphql({
 	graphiql: false
 }));
 
+// Login
+
+app.post('/login', 
+	passport.authenticate('local', { successRedirect: '/', 
+									failureRedirect: '/login'}),
+	(req, res) => {console.log(res)});
+
 // Redirect to any Route
 
 app.get("*", (req, res) => {
     res.sendFile(path.normalize(__dirname+'/../dist/mygameslist/index.html'));
 })
-
-// Login
-
-app.post('/login', 
-	passport.authenticate('local', { successRedirect: '/', 
-									failureRedirect: '/login'}));
 
 // Error handling for invalid requests
 

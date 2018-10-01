@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 import { UniversalService } from '../service/universal.service';
 
@@ -16,7 +17,8 @@ export class DashboardComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
-		private universalService: UniversalService
+		private universalService: UniversalService,
+		private http: HttpClient
 	) { 
 		
 	}
@@ -27,12 +29,22 @@ export class DashboardComponent implements OnInit {
 	@Input() user: User = {
 		name: "",
 		id: null,
-		password: ""
+		password: "",
+		token: ''
 	};
 
 	buttonClick(): void {
 		this.universalService.setUser(this.user.name, this.user.password)
 	}
+
+	submitClick() {
+	  this.http.post('/login',this.user).subscribe(resp => {
+	    console.log(resp);
+	    localStorage.setItem('jwtToken', this.user.token);
+	  }, err => {
+	    console.log(err.error.msg);
+	  });
+	}	
 
 	title = "MyGameList";
 

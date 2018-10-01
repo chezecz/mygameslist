@@ -1,12 +1,14 @@
 	<div class='dashboard_content'>
     
 		<h2>{{title}}</h2>
-    
+    <form action="/login" (ngSubmit)="submitClick()" method="post">
 		<div class='login_form'>
-			<label>Username: <input [(ngModel)]="user.name" placeholder="Username"></label><br/>
-	    <label>Password: <input [(ngModel)]="user.password" placeholder="Password"></label><br/>
-    	<button class="submit" (click) = buttonClick()>Submit</button>
+			<label>Username: <input [(ngModel)]="user.name" placeholder="Username" type="text" name="username"></label><br/>
+	    <label>Password: <input [(ngModel)]="user.password" placeholder="Password" type="password" name="password"></label><br/>
+	    <button type="submit">Log In</button>
+    	<!-- <button class="submit" (click) = buttonClick()>Submit</button> -->
 		</div>
+	</form>
 </div>
 
 
