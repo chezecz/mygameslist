@@ -7,7 +7,9 @@ const sqlite3 = require('sqlite3').verbose();
 const Sequelize = require('sequelize');
 const cors = require('cors');
 const passport = require('passport');
-// const LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+const session = require("express-session");
+const bodyParser = require("body-parser");
 
 // Importing GraphQL Objects
 
@@ -19,6 +21,33 @@ const {
 	GraphQLNonNull,
 	GraphQLSchema,
 } = require('graphql');
+
+// Passport framework structure
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 // Defining Express Application
 
@@ -413,28 +442,24 @@ UserList.hasMany(List, {foreignKey: 'listid'});
 
 sequelize.sync({force: false})
 
-// Authorization
-
-// passport.use(new LocalStrategy(
-//   function(username, password, done) {
-//     User.findOne({ username: username }, function(err, user) {
-//       if (err) { return done(err); }
-//       if (!user) {
-//         return done(null, false, { message: 'Incorrect username.' });
-//       }
-//       if (!user.validPassword(password)) {
-//         return done(null, false, { message: 'Incorrect password.' });
-//       }
-//       return done(null, user);
-//     });
-//   }
-// ));
-
-// App Routing
+// Activating Frameworks
 
 app.use(cors());
 
+app.use(session({
+    secret: 'switchgames',
+    name: 'mygameslist',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(__dirname+'/../'));
+
+// App Routing
 
 app.use('/', express.static(__dirname+'/../dist/mygameslist/'));
 
@@ -455,8 +480,14 @@ app.use('/graph', express_graphql({
 // Redirect to any Route
 
 app.get("*", (req, res) => {
-    res.redirect("/")
+    res.sendFile(path.normalize(__dirname+'/../dist/mygameslist/index.html'));
 })
+
+// Login
+
+app.post('/login', 
+	passport.authenticate('local', { successRedirect: '/', 
+									failureRedirect: '/login'}));
 
 // Error handling for invalid requests
 
