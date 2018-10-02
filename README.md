@@ -69,64 +69,67 @@ Includes infoprmation about selected game
 
 ```
 .
-|-- README.md
-|-- angular.json
-|-- database/
-|   `-- mygameslist.sql
-|-- img/
-|   |-- gameposter.jpg
-|   `-- roflandeze.png*
-|-- node_modules/
-|-- package-lock.json
-|-- package.json
-|-- src/
-|   |-- app/
-|   |   |-- app-routing.module.spec.ts
-|   |   |-- app-routing.module.ts
-|   |   |-- app.component.css
-|   |   |-- app.component.html
-|   |   |-- app.component.spec.ts
-|   |   |-- app.component.ts
-|   |   |-- app.module.ts
-|   |   |-- dashboard/
-|   |   |   |-- dashboard.component.css
-|   |   |   |-- dashboard.component.html
-|   |   |   |-- dashboard.component.spec.ts
-|   |   |   `-- dashboard.component.ts
-|   |   |-- description/
-|   |   |   |-- description.component.css
-|   |   |   |-- description.component.html
-|   |   |   |-- description.component.spec.ts
-|   |   |   `-- description.component.ts
-|   |   `-- user/
-|   |       |-- user.component.css
-|   |       |-- user.component.html
-|   |       |-- user.component.spec.ts
-|   |       `-- user.component.ts
-|   |-- assets/
-|   |-- browserslist
-|   |-- classes/
-|   |   |-- game.ts*
-|   |   `-- user.ts
-|   |-- environments/
-|   |   |-- environment.prod.ts
-|   |   `-- environment.ts
-|   |-- favicon.ico
-|   |-- index.html
-|   |-- karma.conf.js
-|   |-- main.ts
-|   |-- polyfills.ts
-|   |-- styles.css
-|   |-- test.ts
-|   |-- tsconfig.app.json
-|   |-- tsconfig.spec.json
-|   `-- tslint.json
-|-- test\ server/
-|   |-- README_for_testserver.md
-|   |-- index.js
-|   `-- package.json
-|-- tsconfig.json
-`-- tslint.json
+├── angular.json
+├── backend
+│   ├── README_for_testserver.md
+│   ├── gamesdatabase.db
+│   ├── index.js
+│   ├── mygameslist.sql
+│   ├── package-lock.json
+│   └── package.json
+├── database
+│   ├── gamesdatabase.db
+│   └── mygameslist.sql
+├── package-lock.json
+├── package.json
+├── src
+│   ├── app
+│   │   ├── app-routing.module.spec.ts
+│   │   ├── app-routing.module.ts
+│   │   ├── app.component.css
+│   │   ├── app.component.html
+│   │   ├── app.component.spec.ts
+│   │   ├── app.component.ts
+│   │   ├── app.module.ts
+│   │   ├── dashboard
+│   │   │   ├── dashboard.component.css
+│   │   │   ├── dashboard.component.html
+│   │   │   ├── dashboard.component.spec.ts
+│   │   │   └── dashboard.component.ts
+│   │   ├── description
+│   │   │   ├── description.component.css
+│   │   │   ├── description.component.html
+│   │   │   ├── description.component.spec.ts
+│   │   │   └── description.component.ts
+│   │   ├── service
+│   │   │   ├── game.service.spec.ts
+│   │   │   ├── game.service.ts
+│   │   │   ├── list.service.spec.ts
+│   │   │   ├── list.service.ts
+│   │   │   ├── universal.service.spec.ts
+│   │   │   ├── universal.service.ts
+│   │   │   ├── user.service.spec.ts
+│   │   │   └── user.service.ts
+│   │   ├── universal.service.spec.ts
+│   │   ├── universal.service.ts
+│   │   └── user
+│   │       ├── user.component.css
+│   │       ├── user.component.html
+│   │       ├── user.component.spec.ts
+│   │       └── user.component.ts
+│   ├── assets
+│   ├── browserslist
+│   ├── classes
+│   │   ├── game.ts
+│   │   ├── list.ts
+│   │   └── user.ts
+│   ├── environments
+│   │   ├── environment.prod.ts
+│   │   └── environment.ts
+│   ├── favicon.ico
+│   ├── index.html
+│   └── styles.cs
+└── README.md
 
 
 ```
