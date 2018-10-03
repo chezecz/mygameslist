@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit {
 	submitClick() {
 	  this.http.post('/login', {"username": this.user.name, "password": this.user.password}).subscribe(resp => {
 	    localStorage.setItem('jwtToken', this.user.token);
+	    console.log(resp)
 	    console.log(this.user)
 	  }, err => {
 	    console.log(err.error.msg);
