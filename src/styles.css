@@ -175,6 +175,26 @@ body {
     padding: auto;
 	text-align: center;
 }
+.dashboard_button {
+	width: 20%;
+	text-align: center;
+	padding: auto;
+	margin: auto;
+}
+.dashboard_button button {
+	background-color: #000000;
+    border: 2px solid #ffb642;
+    color: #ffb642;
+    padding: 5px 10px;
+    cursor: pointer; /* Pointer/hand icon */
+	width: 50%;
+	color: #ffb642;
+	margin: auto;
+}
+.dashboard_button button:hover {
+	background-color: #ffb642;
+	color: #000000;
+}
 
 
 
@@ -187,7 +207,7 @@ body {
 
 .game_overview {
 	color: #ffb642;
-	float: left;
+	padding: 10px;
 	margin: auto;
 	text-align: center;
 }
