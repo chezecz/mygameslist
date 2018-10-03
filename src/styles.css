@@ -6,6 +6,18 @@ body {
 	font-family: fixedsys, consolas, monospace;
 	background-color: #000000;
 }
+input {
+	font-family: fixedsys, consolas, monospace;
+}
+button {
+	font-family: fixedsys, consolas, monospace;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
 
 
 /* GENERAL SETTING FOR COMMON ELEMENTS */
@@ -196,6 +208,28 @@ body {
 	color: #000000;
 }
 
+.login_form input{
+	border: 2px solid #ffb642;
+	border-radius: 4px;
+	background-color: #000000;
+    color: ffb642;
+    padding: 8px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.login_form input[type=text]{
+	color: #ffb642;
+}
+.login_form input[type=password]{
+	color: #ffb642;
+}
+
+.login_form input::placeholder {
+    color: #ffb642;
+	text-align: center;
+    opacity: .6;
+}
 
 
 
