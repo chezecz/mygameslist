@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 import { List } from '../../classes/list';
 import { User } from '../../classes/user';
@@ -18,7 +19,16 @@ export class UniversalService {
   game: Game;
   user: User;
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo,
+    private http: HttpClient) { }
+
+  logIn(name, password): Observable<any> {
+    return this.http.post('/login', {"username": name, "password": password});
+  }
+
+  logOut(): void {
+    this.http.get('/logout').subscribe();
+  }
 
   getList(id): Observable<any> {
   	const currentQuery = gql`

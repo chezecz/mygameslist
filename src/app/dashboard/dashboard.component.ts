@@ -45,22 +45,13 @@ export class DashboardComponent implements OnInit {
 	}
 
 	submitClick() {
-	  this.http.post('/login', {"username": this.user.name, "password": this.user.password}).subscribe(resp => {
-	    localStorage.setItem('jwtToken', this.user.token);
-	    console.log(resp)
-	    console.log(this.user)
-	  }, err => {
-	    console.log(err.error.msg);
-	  });
+	  this.universalService.logIn(this.user.name, this.user.password).subscribe(response => {
+	  	console.log(response);
+	  })
 	}	
 
 	logoutClick() {
-	  this.http.get('/logout').subscribe(resp => {
-	  	console.log(resp)
-	    console.log(this.user)
-	  }, err => {
-	    console.log(err.error.msg);
-	  });
+	  this.universalService.logOut();
 	}	
 
 	title = "MyGameList";

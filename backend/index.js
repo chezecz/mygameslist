@@ -36,8 +36,7 @@ passport.use('local', new LocalStrategy(
 						username: username
 					},
 					include: [{
-						model: Password,
-						assosiation: Account
+						model: Password
 					}]
 				}).then(function(user) {
 					if (!user) {
@@ -476,14 +475,14 @@ app.listen(4000, () => console.log('Server activated'));
 // Log In/Log Out
 
 app.post('/login', 
-	passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login' }));
+	passport.authenticate('local'), 
+		function(req, res) {
+			res.json(req.user.id);
+		});
 
 app.get('/logout', function(req, res){
-	console.log(req.user);
-  req.logout();
-  console.log(req.user);
-  res.redirect('/');
+  	req.logout();
+  	res.redirect('/');
 });
 
 // GraphQL Interactive Interface
