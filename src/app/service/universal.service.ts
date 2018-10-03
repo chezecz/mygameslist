@@ -111,6 +111,24 @@ export class UniversalService {
   	}).subscribe()
   }
 
+  checkUser(name, password): Observable<any> {
+    const currentQuery = gql`
+    query($name: String!, $password: String!) {
+      checkuser(name: $name, password: $password) {
+        username
+        userid
+      }
+    }
+    `;
+    return this.apollo.watchQuery<any>({
+      query: currentQuery,
+      variables: {
+        name,
+        password
+      }
+    }).valueChanges
+  }
+
   getAllUsers(): Observable<any> {
     const currentQuery = gql`
     query {

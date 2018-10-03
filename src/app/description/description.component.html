@@ -1,7 +1,7 @@
   <div class='game_desc_content'>
     <div class='left'>
-      <div class='game_overview'>
-        <h1>{{games[6].name}} {{title}}</h1>
+      <div class='game_overview' *ngIf='game'>
+        <h1>{{game.name}} {{title}}</h1>
         <img class='user_pic' src='../../../img/gameposter.jpg'>
         <br>
         <br>        
@@ -18,10 +18,10 @@
         </div>
     </div>
 
-    <div class='right'>
+    <div class='right' *ngIf='game'>
       <div class='game_description'>
         <h1>Game Description</h1>
-        <h4>{{games[6].description}}</h4>
+        <h4>{{game.description}}</h4>
         <span>Hollow Knight is a Metroidvania video game developed and published by Australian studio Team Cherry.
           The game was released for Microsoft Windows in February 2017, and later for macOS and Linux in April 2017
           and Nintendo Switch in June 2018.

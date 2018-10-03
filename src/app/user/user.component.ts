@@ -26,7 +26,12 @@ export class UserComponent implements OnInit {
 
 	id: number;
 
-	user: User;
+	user: User = {
+		id: null,
+		name: "",
+		password: "",
+		token: ""
+	};
 
 	games: Game[];
 
@@ -47,7 +52,8 @@ export class UserComponent implements OnInit {
 
 	getUser(): void {
 		this.universalService.getUser(this.id).subscribe(user => {
-			this.user = user.data.user
+			this.user.name = user.data.user.username;
+			this.user.id = user.data.user.userid;
 		});
 	}
 

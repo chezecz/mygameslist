@@ -6,6 +6,7 @@
 			<label>Username: <input [(ngModel)]="user.name" placeholder="Username" type="text" name="username"></label><br/>
 	    <label>Password: <input [(ngModel)]="user.password" placeholder="Password" type="password" name="password"></label><br/>
 	    <button type="submit">Log In</button>
+	    <button (click) = "logoutClick()" >Log Out</button>
     	<!-- <button class="submit" (click) = buttonClick()>Submit</button> -->
 		</div>
 	</form>

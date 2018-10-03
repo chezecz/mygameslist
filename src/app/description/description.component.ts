@@ -13,7 +13,13 @@ import { UniversalService } from '../service/universal.service';
 })
 export class DescriptionComponent implements OnInit {
 
-	game : Game;
+	game : Game = {
+		id: null,
+		name: "",
+		description: ""
+	};
+
+	id: number;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -24,15 +30,25 @@ export class DescriptionComponent implements OnInit {
 	title = "Description";
 
 	ngOnInit() {
-		
+		this.getId();
+		this.getGame();
 	}
 
 	back(): void {
 		this.location.back();
 	}
 
-	// getGames(): void {
-	// 	this.game = this.universalService.getGame().subscribe(game => this.game = game);
-	// }
+	getId(): void {
+		this.id = +this.route.snapshot.paramMap.get('id')
+	}
+
+	getGame(): void {
+		this.universalService.getGame(this.id).subscribe(game => {
+			this.game.id = game.data.game.gameid;
+			this.game.name = game.data.game.gamename;
+			this.game.description = game.data.game.gamedesc;
+		});
+		console.log(this.game)
+	}
 
 }

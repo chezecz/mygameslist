@@ -24,8 +24,13 @@ const {
 
 // Passport framework structure
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
+passport.use('local', new LocalStrategy(
+{
+	usernameField: 'username',
+	passwordField: 'password',
+	passReqToCallback: true
+},
+  function(req, username, password, done) {
     User.findOne({
 					where: {
 						username: username
@@ -34,32 +39,54 @@ passport.use(new LocalStrategy(
 						model: Password,
 						assosiation: Account
 					}]
-				}, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
+				}).then(function(user) {
+					if (!user) {
+        				return done(null, false);
+      				}
+      				if (user.dataValues.password.dataValues.password != password) {
+        				return done(null, false);
+     				}
+      				return done(null, user.dataValues);
+				}) 
+
+}));
 
 passport.serializeUser(function(user, done) {
   done(null, user.userid);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(userid, function(err, user) {
+  User.findById(id, function(err, user) {
     done(err, user);
   });
 });
 
+function loggingMiddleware(req, username, password) {
+	return passport.authenticate('local')
+}
+
 // Defining Express Application
 
 const app = express();
+
+// Activating Frameworks
+
+app.use(cors());
+
+app.use(session({
+    secret: 'switchgames',
+    name: 'mygameslist',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(require('cookie-parser')());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(__dirname+'/../'));
 
 // GraphQL Schema
 
@@ -223,10 +250,10 @@ const MainRootResolver = new GraphQLObjectType({
 					type: new GraphQLNonNull(GraphQLString)
 				},
 				password: {
-					type: GraphQLString
+					type: new GraphQLNonNull(GraphQLString)
 				}
 			},
-			resolve: function(root, args, context) {
+			resolve: function(root, args, req) {
 				username = args.name
 				password = args.password
 				return User.findOne({
@@ -264,17 +291,8 @@ const MainRootMutation = new GraphQLObjectType({
 				username = args.name
 				password = args.password
 				return User.create({
-					username: username,
-					// password: {
-					// 	password: password
-					// }
-				},
-				// {
-				// 	include: [{
-				// 		model: Password,
-				// 		association: Account
-				// 	}]
-				// }
+					username: username
+				}
 				).then(result => {return Password.create({
 					userid: result.userid,
 					password: password
@@ -449,28 +467,24 @@ UserList.hasMany(List, {foreignKey: 'listid'});
 
 sequelize.sync({force: false})
 
-// Activating Frameworks
-
-app.use(cors());
-
-app.use(session({
-    secret: 'switchgames',
-    name: 'mygameslist',
-    proxy: true,
-    resave: true,
-    saveUninitialized: true
-}));
-
-// app.use(bodyParser.urlencoded({ extended: false }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static(__dirname+'/../'));
-
 // App Routing
 
 app.use('/', express.static(__dirname+'/../dist/mygameslist/'));
 
 app.listen(4000, () => console.log('Server activated'));
+
+// Log In/Log Out
+
+app.post('/login', 
+	passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login' }));
+
+app.get('/logout', function(req, res){
+	console.log(req.user);
+  req.logout();
+  console.log(req.user);
+  res.redirect('/');
+});
 
 // GraphQL Interactive Interface
 
@@ -479,17 +493,13 @@ app.use('/graphql', express_graphql({
 	graphiql: true
 }));
 
-app.use('/graph', express_graphql({
+app.use('/graph', express_graphql(req => ({
 	schema: MainSchema,
-	graphiql: false
-}));
-
-// Login
-
-app.post('/login', 
-	passport.authenticate('local', { successRedirect: '/', 
-									failureRedirect: '/login'}),
-	(req, res) => {console.log(res)});
+	graphiql: false,
+	context: {
+		user: req.user
+	}
+})));
 
 // Redirect to any Route
 

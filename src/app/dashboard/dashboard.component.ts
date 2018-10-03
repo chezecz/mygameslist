@@ -33,14 +33,30 @@ export class DashboardComponent implements OnInit {
 		token: ''
 	};
 
+	logUser: User = {
+		name: "",
+		id: null,
+		password: "",
+		token: ''
+	};
+
 	buttonClick(): void {
 		this.universalService.setUser(this.user.name, this.user.password)
 	}
 
 	submitClick() {
-	  this.http.post('/login',this.user).subscribe(resp => {
-	    console.log(resp);
+	  this.http.post('/login', {"username": this.user.name, "password": this.user.password}).subscribe(resp => {
 	    localStorage.setItem('jwtToken', this.user.token);
+	    console.log(this.user)
+	  }, err => {
+	    console.log(err.error.msg);
+	  });
+	}	
+
+	logoutClick() {
+	  this.http.get('/logout').subscribe(resp => {
+	  	console.log(resp)
+	    console.log(this.user)
 	  }, err => {
 	    console.log(err.error.msg);
 	  });

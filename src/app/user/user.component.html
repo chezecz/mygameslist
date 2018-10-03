@@ -1,6 +1,6 @@
   <div class='user_content'>
     <div class='left'>
-			<div class='user_overview'>
+			<div class='user_overview' *ngIf='user'>
 				<h1>{{user.username}} Profile</h1>
 				<img class='user_pic' src='../../../img/roflandeze.png'>
 				<br>
@@ -26,13 +26,13 @@
 		<div class='right'>
 			<div class='user_list' *ngIf="user">
 				<h1>{{user.username}} List</h1>
-				<ul class='user_game_list'>
+				<ul class='user_game_list' *ngIf='games'>
           <li *ngFor="let game of games">
             <a routerLink="/game/{{game.game.gameid}}">
               {{game.game.gamename}}
             </a>
+            <span class='genre'>{{game.game.gamedesc}}</span>
           </li>
-	      	<span class='genre'>{{game.game.gamedesc}}</span>
 				</ul>
 			</div>
 		</div>
