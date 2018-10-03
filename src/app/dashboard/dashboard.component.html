@@ -1,36 +1,42 @@
-	<div class='dashboard_content'>
-    
-		<h2>{{title}}</h2>
-    <form action="/login" (ngSubmit)="submitClick()" method="post">
+<div class='dashboard_content'>
+   
+	<h2>{{title}}</h2>
+	<form action="/login" (ngSubmit)="submitClick()" method="post">
 		<div class='login_form'>
 			<label>Username: <input [(ngModel)]="user.name" placeholder="Username" type="text" name="username"></label><br/>
-	    <label>Password: <input [(ngModel)]="user.password" placeholder="Password" type="password" name="password"></label><br/>
-	    <button type="submit">Log In</button>
-	    <button (click) = "logoutClick()" >Log Out</button>
-    	<!-- <button class="submit" (click) = buttonClick()>Submit</button> -->
+			<label>Password: <input [(ngModel)]="user.password" placeholder="Password" type="password" name="password"></label><br/>
+			<br>
+			
+			<div class='dashboard_button'>
+				<div class="btn-group">
+					<button type="submit">Log In</button>
+					<button (click) = "logoutClick()" >Log Out</button>
+					<!-- <button class="submit" (click) = buttonClick()>Submit</button> -->
+				</div>
+			</div>
 		</div>
 	</form>
-</div>
+	
+	
+	
+	<div *ngIf="users">
+		<ul class="userList">
+		  <li *ngFor="let user of users">
+			<a routerLink="/user/{{user.userid}}">
+			  {{user.username}}
+			</a>
+		  </li>
+		</ul>
+	</div>
 
+	<div *ngIf="games">
+		<ul class="gameList">
+		  <li *ngFor="let game of games">
+			<a routerLink="/game/{{game.gameid}}">
+			  {{game.gamename}}
+			</a>
+		  </li>
+		</ul>
+	</div>
 
-<div *ngIf="users">
-	<ul class="userList">
-	  <li *ngFor="let user of users">
-	    <a routerLink="/user/{{user.userid}}">
-	      {{user.username}}
-	    </a>
-	  </li>
-	</ul>
-</div>
-<h1>
-{{logUser.token}}
-</h1>
-<div *ngIf="games">
-	<ul class="gameList">
-	  <li *ngFor="let game of games">
-	    <a routerLink="/game/{{game.gameid}}">
-	      {{game.gamename}}
-	    </a>
-	  </li>
-	</ul>
 </div>
