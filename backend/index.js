@@ -6,10 +6,11 @@ const express_graphql = require('express-graphql');
 const sqlite3 = require('sqlite3').verbose();
 const Sequelize = require('sequelize');
 const cors = require('cors');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const jwt = require('express-jwt');
+const bcrypt = require('bcrypt')
+const jsonwebtoken = require('jsonwebtoken')
 
 // Importing GraphQL Objects
 
@@ -23,32 +24,6 @@ const {
 } = require('graphql');
 
 // Passport framework structure
-
-passport.use('local', new LocalStrategy(
-  function(username, password, done) {
-  	console.log(username)
-    Password.findOne({userid: userid}).then(function(user) {
-    	console.log(user)
-					if (!user) {
-        				return done(null, false);
-      				}
-      				if (user.password != password) {
-        				return done(null, false);
-     				}
-      				return done(null, user.dataValues);
-				}) 
-
-}));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.userid);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
 
 // Defining Express Application
 
@@ -69,11 +44,17 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(require('cookie-parser')());
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.static(__dirname+'/../'));
 
 // GraphQL Schema
+
+const LogInSchema = new GraphQLObjectType({
+	name: "LogInUser",
+	fields: () => ({
+		username: {type: GraphQLString},
+		userid: {type: new GraphQLNonNull(GraphQLInt)},
+	})
+});
 
 const UserSchema = new GraphQLObjectType({
 	name: "User",
@@ -229,7 +210,7 @@ const MainRootResolver = new GraphQLObjectType({
 			}
 		},
 		checkuser: {
-			type: UserSchema,
+			type: LogInSchema,
 			args: {
 				name: {
 					type: new GraphQLNonNull(GraphQLString)
@@ -249,10 +230,13 @@ const MainRootResolver = new GraphQLObjectType({
 						model: Password,
 						assosiation: Account
 					}]
-				}).then(result => {
-					for (var user in result) {
-						return result[user]
-					}
+				}).then(function(result) {
+					dbPassword = result['password'].dataValues.password
+					return bcrypt.compare(password, dbPassword).then(function(res) {
+						return User.findById(result.get({plain: true}).userid).then(user => {
+							return user.get({plain: true})
+						})
+					})
 				})
 			}
 		}
@@ -272,9 +256,9 @@ const MainRootMutation = new GraphQLObjectType({
 					type: new GraphQLNonNull(GraphQLString)
 				}
 			},
-			resolve: function(root, args, context) {
+			resolve: async function(root, args, context) {
 				username = args.name
-				password = args.password
+				password = await bcrypt.hash(args.password, 10)
 				return User.create({
 					username: username
 				}
@@ -458,32 +442,24 @@ app.use('/', express.static(__dirname+'/../dist/mygameslist/'));
 
 app.listen(4000, () => console.log('Server activated'));
 
-// Log In/Log Out
-
-function loggingMiddleware(req, res) {
-	passport.authenticate('local')
-}
-
-app.post('/login', 
-	function(req, res) {
-		User.findOne({where: { username: req.body.username }}).then(user => {req.body.username = user.userid; loggingMiddleware(req, res)})
-	});
-
-app.get('/logout', function(req, res){
-  	req.logout();
-  	res.redirect('/');
-});
-
 // GraphQL Interactive Interface
+
+const auth = jwt({
+      secret: 'teamsecret',
+      credentialsRequired: false
+    })
 
 app.use('/graphql', express_graphql({
 	schema: MainSchema,
 	graphiql: true
 }));
 
-app.use('/graph', express_graphql(req => ({
+app.use('/graph', bodyParser.json(), auth, express_graphql(req => ({
 	schema: MainSchema,
-	graphiql: false
+	graphiql: false,
+	context: {
+		user: req.user
+	}
 })));
 
 // Redirect to any Route

@@ -40,15 +40,17 @@ export class DashboardComponent implements OnInit {
 		token: ''
 	};
 
-	buttonClick(): void {
-		this.universalService.setUser(this.user.name, this.user.password)
-	}
-
 	submitClick() {
-	  this.universalService.logIn(this.user.name, this.user.password).subscribe(response => {
-	  	console.log(response);
+	  this.universalService.checkUser(this.user.name, this.user.password).subscribe(response => {
+	  	this.logUser.name = response.data.checkuser.username;
+	  	this.logUser.id = response.data.checkuser.userid;
+	  	console.log(this.logUser);
 	  })
 	}	
+
+	signUpClick() {
+		this.universalService.setUser(this.user.name, this.user.password)
+	}
 
 	logoutClick() {
 	  this.universalService.logOut();
