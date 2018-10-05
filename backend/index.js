@@ -25,24 +25,14 @@ const {
 // Passport framework structure
 
 passport.use('local', new LocalStrategy(
-{
-	usernameField: 'username',
-	passwordField: 'password',
-	passReqToCallback: true
-},
-  function(req, username, password, done) {
-    User.findOne({
-					where: {
-						username: username
-					},
-					include: [{
-						model: Password
-					}]
-				}).then(function(user) {
+  function(username, password, done) {
+  	console.log(username)
+    Password.findOne({userid: userid}).then(function(user) {
+    	console.log(user)
 					if (!user) {
         				return done(null, false);
       				}
-      				if (user.dataValues.password.dataValues.password != password) {
+      				if (user.password != password) {
         				return done(null, false);
      				}
       				return done(null, user.dataValues);
@@ -59,10 +49,6 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
-
-function loggingMiddleware(req, username, password) {
-	return passport.authenticate('local')
-}
 
 // Defining Express Application
 
@@ -474,11 +460,14 @@ app.listen(4000, () => console.log('Server activated'));
 
 // Log In/Log Out
 
+function loggingMiddleware(req, res) {
+	passport.authenticate('local')
+}
+
 app.post('/login', 
-	passport.authenticate('local'), 
-		function(req, res) {
-			res.json(req.user.id);
-		});
+	function(req, res) {
+		User.findOne({where: { username: req.body.username }}).then(user => {req.body.username = user.userid; loggingMiddleware(req, res)})
+	});
 
 app.get('/logout', function(req, res){
   	req.logout();
@@ -494,10 +483,7 @@ app.use('/graphql', express_graphql({
 
 app.use('/graph', express_graphql(req => ({
 	schema: MainSchema,
-	graphiql: false,
-	context: {
-		user: req.user
-	}
+	graphiql: false
 })));
 
 // Redirect to any Route
