@@ -23,13 +23,6 @@ const {
 	GraphQLSchema,
 } = require('graphql');
 
-// Passport framework structure
-
-const auth = jwt({
-      secret: 'teamsecret',
-      credentialsRequired: false
-    })
-
 // Defining Express Application
 
 const app = express();
@@ -458,9 +451,22 @@ sequelize.sync({force: false})
 
 // App Routing
 
+const auth = jwt({
+      secret: 'teamsecret',
+      credentialsRequired: false,
+      getToken: function fromHeaderOrQuerystring (req) {
+		    if (req.headers.authorization.split(' ')[1] != 'null'  && req.headers.authorization.split(' ')[0] === 'Bearer') {
+		        console.log(req.headers.authorization.split(' ')[1])
+		        return req.headers.authorization.split(' ')[1];
+		    }
+		    return null;
+		  }
+    })
+
+
 app.use('/', express.static(__dirname+'/../dist/mygameslist/'));
 
-app.listen(4000, () => console.log('Server activated'));
+app.listen(8080, () => console.log('Server activated'));
 
 // GraphQL Interactive Interface
 

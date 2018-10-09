@@ -45,7 +45,7 @@ export class AppModule {
 	{
 		apollo.create({
 			link: httpLink.create({
-				uri: 'http://localhost:4000/graph',
+				uri: '/graph',
 			}),
 			cache: new InMemoryCache()
 		});

@@ -26,10 +26,6 @@ export class UniversalService {
     return this.http.post('/login', {"username": name, "password": password});
   }
 
-  logOut(): void {
-    this.http.get('/logout').subscribe();
-  }
-
   getList(id): Observable<any> {
   	const currentQuery = gql`
   		query ($id: Int!) {
