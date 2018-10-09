@@ -39,6 +39,8 @@ testem.log
 Thumbs.db
 gamesdatabase.db
 .gcloudignore
+.env
+app.standard.yaml
 
 /test server/gamesdatabase.db
 /test server/mygameslist.sql

@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const express_graphql = require('express-graphql');
 const sqlite3 = require('sqlite3').verbose();
+const mysql = require('mysql2');
 const Sequelize = require('sequelize');
 const cors = require('cors');
 const session = require("express-session");
@@ -12,6 +13,12 @@ const jwt = require('express-jwt');
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 const MemoryStore = require('memorystore')(session);
+require('dotenv').load();
+
+sql_user = process.env.SQL_USER;
+sql_password = process.env.SQL_PASSWORD;
+sql_database = process.env.SQL_DATABASE;
+sql_instance = process.env.INSTANCE_CONNECTION_NAME;
 
 // Importing GraphQL Objects
 
@@ -332,11 +339,11 @@ const MainSchema = new GraphQLSchema({
 	mutation: MainRootMutation
 });
 
-// Setting up Sequelize object for sqlite3 database
+// Setting up Sequelize object for mysql database
 
-const sequelize = new Sequelize('database', null, null, {
-	host: 'localhost',
-	dialect: 'sqlite',
+const sequelize = new Sequelize(sql_database, sql_user, sql_password, {
+	host: '127.0.0.1',
+	dialect: 'mysql',
 	operatorsAliases: false,
 	logging: false,
 	define: {
@@ -347,8 +354,7 @@ const sequelize = new Sequelize('database', null, null, {
 		min: 0,
 		acquire: 30000,
 		idle: 10000
-	},
-	storage: __dirname+'/../database/gamesdatabase.db'
+	}
 });
 
 // Database Schemas

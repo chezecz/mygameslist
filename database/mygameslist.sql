@@ -22,8 +22,8 @@ CREATE TABLE userlists (
 	foreign key(userid) references users(userid));
 CREATE TABLE lists (
 	listid integer, 
-	gameid integer not null,
-	foreign key(gameid) references games(gameid)
+	gameid integer,
+	foreign key(gameid) references games(gameid),
 	foreign key(listid) references userlists(listid));
 
 insert into users values ('1', 'cheze');
