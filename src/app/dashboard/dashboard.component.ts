@@ -49,10 +49,8 @@ export class DashboardComponent implements OnInit {
 	  		this.logUser.name = response.data.checkuser.username;
 	  		this.logUser.id = response.data.checkuser.userid;
 	  		this.logUser.token = response.data.checkuser.token;
-	  		console.log(response.data.checkuser)
 	  		localStorage.setItem('mygameslist', JSON.stringify(this.logUser));
 	  		localStorage.setItem('token', response.data.checkuser.token);
-	  		console.log(this.logUser);
 	  	}
 	  })
 	}	
