@@ -69,6 +69,9 @@ export class DashboardComponent implements OnInit {
 	ngOnInit() {
 		this.getGames();
 		this.getUsers();
+		if (localStorage.getItem('token') == undefined) {
+			localStorage.setItem('token', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAiLCJuYW1lIjoiIiwiaWF0IjoxNTE2MjM5MDIyfQ.jOcjEhc41gaNRvvE48IEyKyV8_cR-HSVgNNj6lPSxJg");
+		}
 	}
 
 	query(): void {
