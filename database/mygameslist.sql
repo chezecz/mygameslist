@@ -5,21 +5,21 @@ DROP TABLE lists;
 DROP TABLE userlists;
 
 CREATE TABLE users (
-	userid integer primary key, 
-	username text not null);
+	userid integer primary key AUTO_INCREMENT, 
+	username text not null) AUTO_INCREMENT=1;
 CREATE TABLE passwords (
 	userid integer not null, 
 	password text not null,
 	foreign key(userid) references users(userid));
 CREATE TABLE games (
-	gameid integer primary key, 
+	gameid integer primary key AUTO_INCREMENT, 
 	gamename text not null, 
 	gamedesc text,
-	releasedate text);
+	releasedate text) AUTO_INCREMENT=1;
 CREATE TABLE userlists (
 	userid integer not null, 
-	listid integer primary key,
-	foreign key(userid) references users(userid));
+	listid integer primary key AUTO_INCREMENT,
+	foreign key(userid) references users(userid)) AUTO_INCREMENT=1;
 CREATE TABLE lists (
 	listid integer, 
 	gameid integer,

@@ -4,7 +4,7 @@ const express = require('express');
 const path = require('path');
 const express_graphql = require('express-graphql');
 const sqlite3 = require('sqlite3').verbose();
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const Sequelize = require('sequelize');
 const cors = require('cors');
 const session = require("express-session");
@@ -18,7 +18,7 @@ require('dotenv').load();
 sql_user = process.env.SQL_USER;
 sql_password = process.env.SQL_PASSWORD;
 sql_database = process.env.SQL_DATABASE;
-sql_instance = process.env.INSTANCE_CONNECTION_NAME;
+sql_instance = '/cloudsql/' + process.env.INSTANCE_CONNECTION_NAME;
 
 // Importing GraphQL Objects
 
@@ -342,7 +342,7 @@ const MainSchema = new GraphQLSchema({
 // Setting up Sequelize object for mysql database
 
 const sequelize = new Sequelize(sql_database, sql_user, sql_password, {
-	host: '/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}',
+	host: sql_instance,
 	dialect: 'mysql',
 	operatorsAliases: false,
 	logging: false,
@@ -350,7 +350,7 @@ const sequelize = new Sequelize(sql_database, sql_user, sql_password, {
 		timestamps: false
 	},
 	dialectOptions: {
-        socketPath: '/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}'
+        socketPath: sql_instance
     },
 	pool: {
 		max: 5,
@@ -480,7 +480,7 @@ app.listen(8080, () => console.log('Server activated'));
 
 // GraphQL Interactive Interface
 
-app.use('/graphql', auth, express_graphql({
+app.use('/graphql', express_graphql({
 	schema: MainSchema,
 	graphiql: true
 }));

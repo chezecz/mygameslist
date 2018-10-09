@@ -48,7 +48,6 @@ export class DescriptionComponent implements OnInit {
 			this.game.name = game.data.game.gamename;
 			this.game.description = game.data.game.gamedesc;
 		});
-		console.log(this.game)
 	}
 
 }
