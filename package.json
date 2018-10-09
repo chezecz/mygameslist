@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "sqlite3 database/gamesdatabase.db < database/mygameslist.sql && ng build && node backend/index.js",
-    "run": "node backend/index.js",
+    "start": "node backend/index.js",
+    "run": "sqlite3 database/gamesdatabase.db < database/mygameslist.sql && ng build && node backend/index.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
