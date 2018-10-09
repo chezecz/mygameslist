@@ -83,6 +83,10 @@ button:focus {
     float: left;
 }
 
+#right-button {
+	float: right;
+}
+
 .navbar li a {
     display: block;
     color: #ffb642;
