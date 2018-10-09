@@ -26,6 +26,9 @@
 		<div class='right'>
 			<div class='user_list' *ngIf="user">
 				<h1>{{user.name}} List</h1>
+        <div class="btn-group">
+					<button *ngFor="let list of lists">List {{list.list.listid}}</button>
+				</div>
 				<ul class='user_game_list' *ngIf='games'>
           <li *ngFor="let game of games">
             <a routerLink="/game/{{game.game.gameid}}">
