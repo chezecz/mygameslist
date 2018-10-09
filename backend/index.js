@@ -25,6 +25,11 @@ const {
 
 // Passport framework structure
 
+const auth = jwt({
+      secret: 'teamsecret',
+      credentialsRequired: false
+    })
+
 // Defining Express Application
 
 const app = express();
@@ -34,7 +39,7 @@ const app = express();
 app.use(cors());
 
 app.use(session({
-    secret: 'switchgames',
+    secret: 'teamsecret',
     name: 'mygameslist',
     proxy: true,
     resave: true,
@@ -52,7 +57,8 @@ const LogInSchema = new GraphQLObjectType({
 	name: "LogInUser",
 	fields: () => ({
 		username: {type: GraphQLString},
-		userid: {type: new GraphQLNonNull(GraphQLInt)},
+		userid: {type: GraphQLInt},
+		token: {type: GraphQLString}
 	})
 });
 
@@ -153,6 +159,7 @@ const MainRootResolver = new GraphQLObjectType({
 			resolve: function(root, args, context) {
 				userid = args.id
 				return User.findOne({where: {userid}}).then(user => {
+					console.log(context)
 					return user.get({plain: true})
 				})
 			}
@@ -231,11 +238,25 @@ const MainRootResolver = new GraphQLObjectType({
 						assosiation: Account
 					}]
 				}).then(function(result) {
+					if (result == null) {
+						return null
+					}
 					dbPassword = result['password'].dataValues.password
+					user = result.get({plain: true})
 					return bcrypt.compare(password, dbPassword).then(function(res) {
-						return User.findById(result.get({plain: true}).userid).then(user => {
-							return user.get({plain: true})
-						})
+						if (!res) {
+							return null
+						} else {
+							return User.findById(result.get({plain: true}).userid).then(user => {
+								token = jsonwebtoken.sign(
+						            { id: user.userid, username: user.username },
+						            'teamsecret'
+						          )
+								result = user.get({plain: true})
+								result.token = token
+								return result
+							})
+						}
 					})
 				})
 			}
@@ -247,7 +268,7 @@ const MainRootMutation = new GraphQLObjectType({
 	name: "RootMutation",
 	fields: () => ({
 		newuser: {
-			type: UserSchema,
+			type: LogInSchema,
 			args: {
 				name: {
 					type: new GraphQLNonNull(GraphQLString)
@@ -267,7 +288,6 @@ const MainRootMutation = new GraphQLObjectType({
 					password: password
 				})})
 				.then(result => {return null})
-				.catch(err => console.log(err))
 			}
 		},
 		newgame: {
@@ -444,12 +464,7 @@ app.listen(4000, () => console.log('Server activated'));
 
 // GraphQL Interactive Interface
 
-const auth = jwt({
-      secret: 'teamsecret',
-      credentialsRequired: false
-    })
-
-app.use('/graphql', express_graphql({
+app.use('/graphql', auth, express_graphql({
 	schema: MainSchema,
 	graphiql: true
 }));

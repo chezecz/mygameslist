@@ -127,6 +127,7 @@ export class UniversalService {
       checkuser(name: $name, password: $password) {
         username
         userid
+        token
       }
     }
     `;
