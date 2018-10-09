@@ -1,1 +1,3 @@
 runtime: nodejs8
+beta_settings:
+    cloud_sql_instances: mygameslist-217906:australia-southeast1:mygameslist
