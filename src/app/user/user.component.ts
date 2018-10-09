@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Game } from '../../classes/game';
 import { User } from '../../classes/user';
+import { List } from '../../classes/list';
 
 import { UniversalService } from '../service/universal.service';
 
@@ -35,6 +36,8 @@ export class UserComponent implements OnInit {
 
 	games: Game[];
 
+	lists: List[];
+
 	ngOnInit() {
 		this.getId();
 		this.getUser();
@@ -59,7 +62,7 @@ export class UserComponent implements OnInit {
 
 	getList(): void {
 		this.universalService.getList(this.id).subscribe(list => {
-			console.log(list.data)
+			this.lists = list.data.lists;
 		});
 	}
 

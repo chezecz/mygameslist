@@ -1,3 +1,3 @@
 export class List {
-	id: number;
+	listid: number;
 }
