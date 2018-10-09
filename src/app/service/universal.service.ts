@@ -31,9 +31,6 @@ export class UniversalService {
   		query ($id: Int!) {
   			lists (id: $id) {
     			listid
-    			user {
-      				username
-    			}
   			}
   		}
   	`;

@@ -9,8 +9,9 @@ const cors = require('cors');
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const jwt = require('express-jwt');
-const bcrypt = require('bcrypt')
-const jsonwebtoken = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+const jsonwebtoken = require('jsonwebtoken');
+const MemoryStore = require('memorystore')(session);
 
 // Importing GraphQL Objects
 
@@ -32,11 +33,12 @@ const app = express();
 app.use(cors());
 
 app.use(session({
-    secret: 'teamsecret',
-    name: 'mygameslist',
-    proxy: true,
+    store: new MemoryStore({
+      checkPeriod: 86400000
+    }),
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    secret: 'teamsecret'
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -461,8 +463,7 @@ const auth = jwt({
 		    }
 		    return null;
 		  }
-    })
-
+    });
 
 app.use('/', express.static(__dirname+'/../dist/mygameslist/'));
 
