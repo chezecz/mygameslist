@@ -38,6 +38,7 @@ testem.log
 .DS_Store
 Thumbs.db
 gamesdatabase.db
+.gcloudignore
 
 /test server/gamesdatabase.db
 /test server/mygameslist.sql
