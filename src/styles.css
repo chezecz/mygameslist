@@ -237,8 +237,17 @@ button:focus {
 .gameList {
     list-style: none;  
 }
+.gameList a {
+    list-style: none;  
+}
+
 .userList {
-    list-style: none;
+    text-decoration: none;
+    #ffb642
+}
+.userList a {
+    text-decoration: none;
+    #ffb642
 }
 
 
