@@ -234,6 +234,12 @@ button:focus {
 	text-align: center;
     opacity: .6;
 }
+.gameList {
+    list-style: none;  
+}
+.userList {
+    list-style: none;
+}
 
 
 
