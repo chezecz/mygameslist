@@ -155,6 +155,10 @@ button:focus {
 	padding: 10px 20px;
 }
 
+.user_button button {
+  margin: auto;
+}
+
 
 
 
