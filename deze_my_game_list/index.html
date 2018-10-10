@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+	<div class='frame'>
+	
+		<div class='navbar'>
+			<ul>
+				<li><a class='active' href="">Main</a></li>
+				<li><a href="user">User Profile</a></li>
+				<li><a href="game_desc">Game Info</a></li>
+				<li id="right-button"><a href="logout">Log Out</a></li>
+			</ul>
+		</div>
+	
+	
+		<div class='dashboard_content'>
+			<h2>Welcome to MyGameList</h2>
+
+			<div class='login_form'>
+				<label>Username: <input name="name" placeholder="USERNAME" type="text"></label><br/><br>
+				<label>Password: <input name="password" placeholder="PASSWORD" type='password'></label><br/><br>
+				<br>
+				
+				<div class='dashboard_button'>
+					<div class="btn-group">
+						<button type="submit">Log In</button>
+						<button (click) = "logoutClick()" >Register</button>
+						<!-- <button class="submit" (click) = buttonClick()>Submit</button> -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+</body>
+
+
+
+</html>
