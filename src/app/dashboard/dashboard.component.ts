@@ -80,6 +80,9 @@ export class DashboardComponent implements OnInit {
 	ngOnInit() {
 		this.getGames();
 		this.getUsers();
+		if (localStorage.getItem('id')) {
+			this.logUser.id = Number(localStorage.getItem('id'));
+		}
 	}
 
 	query(): void {

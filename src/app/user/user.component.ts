@@ -72,9 +72,7 @@ export class UserComponent implements OnInit {
 	}
 
 	addList(): void {
-		this.universalService.addList().subscribe(response => {
-			console.log(response);
-		});
+		this.universalService.addList().subscribe();
 	}
 
 	getGames(id): void {

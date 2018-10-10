@@ -1,7 +1,7 @@
 <div class='dashboard_content'>
    
 	<h2>{{title}}</h2>
-	<form action="/login" (ngSubmit)="submitClick()" method="post">
+	<form action="/login" (ngSubmit)="submitClick()" method="post" *ngIf="!logUser.id">
 		<div class='login_form'>
 			<label>Username: <input [(ngModel)]="user.name" placeholder="USERNAME" type="text" name="username"></label><br/>
 			<label>Password: <input [(ngModel)]="user.password" placeholder="PASSWORD" type="password" name="password"></label><br/>
