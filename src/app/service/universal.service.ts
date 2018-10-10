@@ -43,16 +43,16 @@ export class UniversalService {
   }
 
   addList(): Observable<any> {
-    const currentQuery = gql `
-      query {
+    const currentMutation = gql `
+      mutation {
         addlist {
           listid
         }
       }
     `;
-    return this.apollo.watchQuery<any>({
-      query: currentQuery
-    }).valueChanges
+    return this.apollo.mutate({
+      mutation: currentMutation
+    })
   }
 
   getUser(id): Observable<any> {
