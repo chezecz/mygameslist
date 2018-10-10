@@ -13,6 +13,7 @@ export class AppComponent {
 	logoutClick() {
 	  localStorage.clear();
     this.isLogged = localStorage.getItem('token');
+    location.reload();
 	}	
 
 	id = Number(localStorage.getItem('id'));
