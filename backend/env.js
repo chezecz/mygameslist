@@ -1,3 +1,8 @@
+// http://gunargessner.com/gcloud-env-vars/
+// Used to set up enviromental variables for Google Cloud App Engine
+// Otherwise have to either upload sensitive data to the source control 
+// Or have not workable application downloaded straight from the source control
+
 'use strict'
 
 const fs = require('fs')
