@@ -64,19 +64,19 @@ export class UserComponent implements OnInit {
 	getList(): void {
 		this.universalService.getList(this.id).subscribe(list => {
 			this.lists = list.data.lists;
-		});
-		if (this.lists) {
+			if (this.lists[0].listid) {
 			this.listid = this.lists[0].listid;
-			this.getGames();
+			this.getGames(this.listid)
 		}
+		});
 	}
 
 	addList(): void {
 		this.universalService.addList().subscribe();
 	}
 
-	getGames(): void {
-		this.universalService.getGames(this.listid).subscribe(games => {
+	getGames(id): void {
+		this.universalService.getGames(id).subscribe(games => {
 			this.games = games.data.listgames
 		});
 	}

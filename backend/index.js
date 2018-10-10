@@ -335,9 +335,11 @@ const MainRootMutation = new GraphQLObjectType({
 		addlist: {
 			type: ListSchema,
 			resolve: function(root, args, context) {
+				console.log(context)
 				return UserList.create({
 					userid: context.user.id
 				}).then(result => {
+					console.log(result)
 					return result
 				})
 			}

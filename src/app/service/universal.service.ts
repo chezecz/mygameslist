@@ -45,7 +45,7 @@ export class UniversalService {
   addList(): Observable<any> {
     const currentQuery = gql `
       query {
-        addList {
+        addlist {
           listid
         }
       }
