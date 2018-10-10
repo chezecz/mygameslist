@@ -9,7 +9,7 @@
 			<li><a routerLink="/dashboard">Main</a></li>
 			<li><a routerLink="/user/{{id}}">User Profile</a></li>
 			<li><a routerLink="/game/{{gameid}}">Game Info</a></li>
-      <li id="right-button"><a routerLink="/dashboard" (click)="logoutClick()">Log Out</a></li>
+      <li *ngIf="isLogged" id="right-button"><a routerLink="/dashboard" (click)="logoutClick()">Log Out</a></li>
 		</ul>
 	</div>
 <router-outlet></router-outlet>
