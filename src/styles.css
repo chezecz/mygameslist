@@ -134,8 +134,13 @@ button:focus {
 	margin: 10px;
 	color: #ffb642;
 }
+.user_list ul {
+  list-style: none;
+}
+
 .user_game_list a {
 	color: #ffb642;
+  text-decoration: none;
 }
 
 .user_game_list {
