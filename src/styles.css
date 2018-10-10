@@ -130,6 +130,7 @@ button:focus {
 	text-align: center;
 }
 .user_list {
+  list-style: none;
 	margin: 10px;
 	color: #ffb642;
 }
