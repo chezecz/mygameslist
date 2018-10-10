@@ -1,7 +1,7 @@
   <div class='game_desc_content'>
     <div class='left'>
       <div class='game_overview' *ngIf='game'>
-        <h1>{{game.name}} {{title}}</h1>
+        <h1>{{game.name}}</h1>
         <img class='user_pic' src='../../../img/gameposter.jpg'>
         <br>
         <br>        
@@ -12,15 +12,16 @@
         <span>Platforms: Switch, PC</span>
         <br>
         <br>
+        
+        <div class='game_button' *ngIf='userid'>
+          <button (click)='addGame()'>Add Game to List</button>
+        </div>
         <div class='list' *ngIf='userid'>
           <select ng-model="selectedList" [(ngModel)]="selected">
             <option *ngFor="let list of lists" [value]="list.listid">
               {{list.listid}}
             </option>
           </select>
-        </div>
-        <div class='game_button' *ngIf='userid'>
-          <button (click)='addGame()'>Add Game to List</button>
         </div>
         </div>
     </div>
