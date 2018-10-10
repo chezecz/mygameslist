@@ -12,8 +12,15 @@
         <span>Platforms: Switch, PC</span>
         <br>
         <br>
-        <div class='game_button'>
-          <button>Add Game to List</button>
+        <div class='list' *ngIf='userid'>
+          <select ng-model="selectedList" [(ngModel)]="selected">
+            <option *ngFor="let list of lists" [value]="list.listid">
+              {{list.listid}}
+            </option>
+          </select>
+        </div>
+        <div class='game_button' *ngIf='userid'>
+          <button (click)='addGame()'>Add Game to List</button>
         </div>
         </div>
     </div>

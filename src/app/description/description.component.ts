@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Game } from '../../classes/game';
+import { List } from '../../classes/list';
 
 import { UniversalService } from '../service/universal.service';
 
@@ -19,7 +20,13 @@ export class DescriptionComponent implements OnInit {
 		description: ""
 	};
 
+	lists: List[];
+
+	userid: number;
+
 	id: number;
+
+	selected: string;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -32,6 +39,7 @@ export class DescriptionComponent implements OnInit {
 	ngOnInit() {
 		this.getId();
 		this.getGame();
+		this.getLists();
 	}
 
 	back(): void {
@@ -40,6 +48,19 @@ export class DescriptionComponent implements OnInit {
 
 	getId(): void {
 		this.id = +this.route.snapshot.paramMap.get('id')
+	}
+
+	addGame(): void {
+		this.universalService.addGame(this.selected, this.id).subscribe(response => {
+			console.log(response);
+		})
+	}
+
+	getLists(): void {
+		this.userid = Number(localStorage.getItem('id'));
+		this.universalService.getList(this.userid).subscribe(response => {
+			this.lists = response.data.lists;
+		})
 	}
 
 	getGame(): void {

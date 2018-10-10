@@ -43,7 +43,7 @@ export class UniversalService {
   }
 
   addList(): Observable<any> {
-    const currentMutation = gql `
+    const currentMutation = gql`
       mutation {
         addlist {
           listid
@@ -53,6 +53,24 @@ export class UniversalService {
     return this.apollo.mutate({
       mutation: currentMutation
     })
+  }
+
+  addGame(listid, gameid): Observable<any> {
+    const currentMutation = gql`
+      mutation ($listid: Int!, $gameid: Int!) {
+        addgame(listid: $listid, gameid: $gameid) {
+          gameid
+          listid
+        }
+       }
+      `;
+      return this.apollo.mutate({
+        mutation: currentMutation,
+        variables: {
+          listid,
+          gameid
+        }
+      })
   }
 
   getUser(id): Observable<any> {
