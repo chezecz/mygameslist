@@ -27,6 +27,8 @@ export class UserComponent implements OnInit {
 
 	id: number;
 
+	listid: number;
+
 	user: User = {
 		id: null,
 		name: "",
@@ -42,7 +44,6 @@ export class UserComponent implements OnInit {
 		this.getId();
 		this.getUser();
 		this.getList();
-		this.getGames();
 	}
 
 	getId(): void {
@@ -64,10 +65,14 @@ export class UserComponent implements OnInit {
 		this.universalService.getList(this.id).subscribe(list => {
 			this.lists = list.data.lists;
 		});
+		if (this.lists) {
+			this.listid = this.lists[0].listid;
+			this.getGames();
+		}
 	}
 
 	getGames(): void {
-		this.universalService.getGames(this.id).subscribe(games => {
+		this.universalService.getGames(this.listid).subscribe(games => {
 			this.games = games.data.listgames
 		});
 	}

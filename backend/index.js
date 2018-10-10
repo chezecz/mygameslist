@@ -281,15 +281,31 @@ const MainRootMutation = new GraphQLObjectType({
 			},
 			resolve: async function(root, args, context) {
 				username = args.name
+				response = {}
 				password = await bcrypt.hash(args.password, 10)
-				return User.create({
+				return User.findOne({ where: {
+					username: username
+				}
+				}).then(check => {if (check) {return response} else {
+					return User.create({
 					username: username
 				}
 				).then(result => {return Password.create({
 					userid: result.userid,
 					password: password
 				})})
-				.then(result => {return null})
+				.then(result => {
+					token = jsonwebtoken.sign(
+						    	{ id: result.userid, username: username },
+						    	'teamsecret'
+						    )
+					response.username = username
+					response.userid = result.userid
+					response.token = token
+					return response
+				})
+				.catch(err => console.log(err))
+				}})
 			}
 		},
 		newgame: {
@@ -317,6 +333,31 @@ const MainRootMutation = new GraphQLObjectType({
 				.catch(err => console.log(err))
 			}
 		},
+		addlist: {
+			type: ListSchema,
+			resolve: function(root, args, context) {
+				return UserList.create({
+					userid: context.user.id
+				}).then(result => {
+					return result
+				})
+			}
+		},
+		addgame: {
+			type: ListGameSchema,
+			args: {
+				listid: {type: new GraphQLNonNull(GraphQLInt)},
+				gameid: {type: new GraphQLNonNull(GraphQLInt)}
+			},
+			resolve: function(root, args, context) {
+				listid = args.listid
+				gameid = args.gameid
+				return List.create({
+					listid: listid,
+					gameid: gameid
+				}).then(result => {return result})
+			}
+		},
 		newlist: {
 			type: ListSchema,
 			args: {
@@ -342,16 +383,16 @@ const MainSchema = new GraphQLSchema({
 // Setting up Sequelize object for mysql database
 
 const sequelize = new Sequelize(sql_database, sql_user, sql_password, {
-	host: sql_instance,
+	host: '35.189.5.139',
 	dialect: 'mysql',
 	operatorsAliases: false,
 	logging: false,
 	define: {
 		timestamps: false
 	},
-	dialectOptions: {
-        socketPath: sql_instance
-    },
+	// dialectOptions: {
+ //        socketPath: sql_instance
+ //    },
 	pool: {
 		max: 5,
 		min: 0,
@@ -466,8 +507,7 @@ const auth = jwt({
       secret: 'teamsecret',
       credentialsRequired: false,
       getToken: function fromHeaderOrQuerystring (req) {
-		    if (req.headers.authorization.split(' ')[1] != 'null'  && req.headers.authorization.split(' ')[0] === 'Bearer') {
-		        console.log(req.headers.authorization.split(' ')[1])
+		    if (req.headers.authorization && req.headers.authorization.split(' ')[1] != 'null'  && req.headers.authorization.split(' ')[0] === 'Bearer') {
 		        return req.headers.authorization.split(' ')[1];
 		    }
 		    return null;
@@ -480,7 +520,7 @@ app.listen(8080, () => console.log('Server activated'));
 
 // GraphQL Interactive Interface
 
-app.use('/graphql', express_graphql({
+app.use('/graphql', auth, express_graphql({
 	schema: MainSchema,
 	graphiql: true
 }));

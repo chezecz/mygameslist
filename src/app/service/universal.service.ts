@@ -97,21 +97,23 @@ export class UniversalService {
   	}).valueChanges
   }
 
-  setUser(name, password): void {
+  setUser(name, password): Observable<any> {
   	const currentMutation = gql`
   		mutation($name: String!, $password: String!) {
   			newuser(name: $name, password: $password) {
   				username
+          userid
+          token
   			}
   		}
   	`;
-  	this.apollo.mutate({
+  	return this.apollo.mutate({
   		mutation: currentMutation,
   		variables: {
   			name,
   			password
   		}
-  	}).subscribe()
+  	})
   }
 
   checkUser(name, password): Observable<any> {

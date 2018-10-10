@@ -42,7 +42,6 @@ export class DashboardComponent implements OnInit {
 
 	submitClick() {
 	  this.universalService.checkUser(this.user.name, this.user.password).subscribe(response => {
-	  	console.log(response)
 	  	if (response.data.checkuser == null) {
 	  		return "Wrong Username/Password"
 	  	} else {
@@ -56,7 +55,18 @@ export class DashboardComponent implements OnInit {
 	}	
 
 	signUpClick() {
-		this.universalService.setUser(this.user.name, this.user.password)
+		this.universalService.setUser(this.user.name, this.user.password).subscribe(response => {
+			console.log(response)
+			if (response.data.newuser == null) {
+				return "Not Success"
+			} else {
+				this.logUser.name = response.data.newuser.username;
+	  			this.logUser.id = response.data.newuser.userid;
+	  			this.logUser.token = response.data.newuser.token;
+	  			localStorage.setItem('mygameslist', JSON.stringify(this.logUser));
+	  			localStorage.setItem('token', response.data.newuser.token);
+			}
+		})
 	}
 
 	title = "MyGameList";
