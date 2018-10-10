@@ -15,7 +15,7 @@
 				<br>
 				<br>
 				<div class='user_button'>
-					<div class="btn-group">
+					<div>
 						<button (click) = 'addList()'>Add List</button>
 					</div>
 				</div>
@@ -25,7 +25,7 @@
 		<div class='right'>
 			<div class='user_list' *ngIf="user">
 				<h1>{{user.name}} List</h1>
-        <div>
+        <div class="btn-group">
 					<button *ngFor="let list of lists" (click)="getGames(list.listid)">List {{list.listid}}</button>
 				</div>
 				<ul class='user_game_list' *ngIf='games'>
