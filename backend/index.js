@@ -13,7 +13,7 @@ const jwt = require('express-jwt');
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 const MemoryStore = require('memorystore')(session);
-require('dotenv').load();
+require('dotenv').config();
 
 sql_user = process.env.SQL_USER;
 sql_password = process.env.SQL_PASSWORD;
