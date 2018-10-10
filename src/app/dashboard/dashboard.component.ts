@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit {
 	  		localStorage.setItem('username', this.logUser.name);
 	  		localStorage.setItem('id', String(this.logUser.id));
 	  		localStorage.setItem('token', response.data.checkuser.token);
+        location.reload();
 	  	}
 	  })
 	}	
@@ -69,6 +70,7 @@ export class DashboardComponent implements OnInit {
 	  			localStorage.setItem('username', this.logUser.name);
 	  			localStorage.setItem('id', String(this.logUser.id));
 	  			localStorage.setItem('token', response.data.newuser.token);
+        location.reload();
 			}
 		})
 	}
