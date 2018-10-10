@@ -16,6 +16,7 @@
         <div class='game_button' *ngIf='userid'>
           <button (click)='addGame()'>Add Game to List</button>
         </div>
+        <br>
         <div class='list' *ngIf='userid'>
           <select ng-model="selectedList" [(ngModel)]="selected">
             <option *ngFor="let list of lists" [value]="list.listid">
