@@ -8,9 +8,11 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
 	title = 'MYGAMELIST';
+  isLogged = localStorage.getItem('token');
 
 	logoutClick() {
 	  localStorage.clear();
+    this.isLogged = localStorage.getItem('token');
 	}	
 
 	id = Number(localStorage.getItem('id'));
