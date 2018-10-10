@@ -49,6 +49,8 @@ export class DashboardComponent implements OnInit {
 	  		this.logUser.id = response.data.checkuser.userid;
 	  		this.logUser.token = response.data.checkuser.token;
 	  		localStorage.setItem('mygameslist', JSON.stringify(this.logUser));
+	  		localStorage.setItem('username', this.logUser.name);
+	  		localStorage.setItem('id', String(this.logUser.id));
 	  		localStorage.setItem('token', response.data.checkuser.token);
 	  	}
 	  })
@@ -64,6 +66,8 @@ export class DashboardComponent implements OnInit {
 	  			this.logUser.id = response.data.newuser.userid;
 	  			this.logUser.token = response.data.newuser.token;
 	  			localStorage.setItem('mygameslist', JSON.stringify(this.logUser));
+	  			localStorage.setItem('username', this.logUser.name);
+	  			localStorage.setItem('id', String(this.logUser.id));
 	  			localStorage.setItem('token', response.data.newuser.token);
 			}
 		})
@@ -74,7 +78,6 @@ export class DashboardComponent implements OnInit {
 	ngOnInit() {
 		this.getGames();
 		this.getUsers();
-
 	}
 
 	query(): void {

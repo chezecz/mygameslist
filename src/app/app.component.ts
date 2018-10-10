@@ -12,5 +12,10 @@ export class AppComponent {
 	logoutClick() {
 	  localStorage.clear();
 	}	
+
+	id = Number(localStorage.getItem('id'));
+
+	gameid = Math.floor(Math.random() * 8) + 1;
+
 }
 

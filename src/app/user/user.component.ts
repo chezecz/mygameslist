@@ -71,6 +71,10 @@ export class UserComponent implements OnInit {
 		}
 	}
 
+	addList(): void {
+		this.universalService.addList().subscribe();
+	}
+
 	getGames(): void {
 		this.universalService.getGames(this.listid).subscribe(games => {
 			this.games = games.data.listgames

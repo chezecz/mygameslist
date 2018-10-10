@@ -159,7 +159,6 @@ const MainRootResolver = new GraphQLObjectType({
 				}
 			},
 			resolve: function(root, args, context) {
-				console.log(context)
 				userid = args.id
 				return User.findOne({where: {userid}}).then(user => {
 					return user.get({plain: true})
