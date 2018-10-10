@@ -122,6 +122,7 @@ button:focus {
 	height: 100%;
 	color: #ffb642;
 	padding: 10px;
+  text-align: center;
 }
 .user_overview h1 {
 	text-align: center;
@@ -156,7 +157,18 @@ button:focus {
 }
 
 .user_button button {
-  margin: auto;
+	background-color: #000000;
+    border: 2px solid #ffb642;
+    color: #ffb642;
+    padding: 5px 10px;
+    cursor: pointer; /* Pointer/hand icon */
+	width: 50%;
+	color: #ffb642;
+	margin: auto;
+}
+.user_button button:hover {
+	background-color: #ffb642;
+	color: #000000;
 }
 
 
