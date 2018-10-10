@@ -52,7 +52,7 @@ export class DescriptionComponent implements OnInit {
 
 	addGame(): void {
 		this.universalService.addGame(this.selected, this.id).subscribe(response => {
-			console.log(response);
+			location.reload();
 		})
 	}
 

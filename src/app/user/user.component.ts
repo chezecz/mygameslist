@@ -72,7 +72,9 @@ export class UserComponent implements OnInit {
 	}
 
 	addList(): void {
-		this.universalService.addList().subscribe();
+		this.universalService.addList().subscribe(response => {
+			location.reload();
+		});
 	}
 
 	getGames(id): void {

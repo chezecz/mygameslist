@@ -382,16 +382,16 @@ const MainSchema = new GraphQLSchema({
 // Setting up Sequelize object for mysql database
 
 const sequelize = new Sequelize(sql_database, sql_user, sql_password, {
-	host: '35.189.5.139',
+	host: sql_instance,
 	dialect: 'mysql',
 	operatorsAliases: false,
 	logging: false,
 	define: {
 		timestamps: false
 	},
-	// dialectOptions: {
- //        socketPath: sql_instance
- //    },
+	dialectOptions: {
+        socketPath: sql_instance
+    },
 	pool: {
 		max: 5,
 		min: 0,
