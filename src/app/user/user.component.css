@@ -1,1 +1,57 @@
+/* USER AND GAME LISTS CSS */
+.user_content {
+	height: 100%;
+}
+.user_overview {
+	height: 100%;
+	color: #ffb642;
+	padding: 10px;
+  text-align: center;
+}
+.user_overview h1 {
+	text-align: center;
+}
+.user_overview h3 {
+	text-align: center;
+}
+.user_list {
+  list-style: none;
+	margin: 10px;
+	color: #ffb642;
+}
+.user_list ul {
+  list-style: none;
+}
+
+.user_game_list a {
+	color: #ffb642;
+  text-decoration: none;
+}
+
+.user_game_list {
+	color: #ff8842;;
+}
+
+.user_game_list li{
+	padding: 10px 20px;
+}
+
+.user_game_list span{
+	padding: 10px 20px;
+}
+
+.user_button button {
+	background-color: #000000;
+    border: 2px solid #ffb642;
+    color: #ffb642;
+    padding: 5px 10px;
+    cursor: pointer; /* Pointer/hand icon */
+	width: 50%;
+	color: #ffb642;
+	margin: auto;
+}
+.user_button button:hover {
+	background-color: #ffb642;
+	color: #000000;
+}
 
