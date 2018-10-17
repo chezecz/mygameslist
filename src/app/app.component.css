@@ -1,1 +1,47 @@
+/* NAVBAR CSS */
+.navbar {
+	background-color: #12dd93;
+	width: 100%;
+	float: left;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar li {
+    float: left;
+}
+
+#right-button {
+	float: right;
+}
+
+.navbar li a {
+    display: block;
+    color: #ffb642;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.navbar .active {
+    background-color: #ffb642;
+	color: #333333;
+	//border-style: solid;
+    //border-width: 2px;	
+	//border-color: #ffb642;
+	//padding: 12px 14px;
+}
+
+.navbar li a:hover {
+    border-style: solid;
+    border-width: 2px;	
+	padding: 12px 14px;
+	border-color: #ffb642;
+}
+
 
