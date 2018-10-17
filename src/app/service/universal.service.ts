@@ -42,6 +42,23 @@ export class UniversalService {
   	}).valueChanges
   }
 
+  getMainPage(): Observable<any> {
+    const currentQuery = gql`
+    query {
+      users {
+        username
+        userid
+      }
+      games {
+        gamename
+        gameid
+      }
+    }`;
+    return this.apollo.watchQuery<any>({
+      query: currentQuery
+    }).valueChanges
+  }
+
   addList(): Observable<any> {
     const currentMutation = gql`
       mutation {

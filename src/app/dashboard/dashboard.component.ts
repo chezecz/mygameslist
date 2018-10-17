@@ -78,8 +78,9 @@ export class DashboardComponent implements OnInit {
 	title = "MyGameList";
 
 	ngOnInit() {
-		this.getGames();
-		this.getUsers();
+		// this.getGames();
+		// this.getUsers();
+		this.getAll();
 		if (localStorage.getItem('id')) {
 			this.logUser.id = Number(localStorage.getItem('id'));
 		}
@@ -87,6 +88,13 @@ export class DashboardComponent implements OnInit {
 
 	query(): void {
 		
+	}
+
+	getAll(): void {
+		this.universalService.getMainPage().subscribe(all => {
+			this.games = all.data.games
+			this.users = all.data.users
+		});
 	}
 
 	getGames(): void {

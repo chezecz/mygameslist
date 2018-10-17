@@ -140,6 +140,8 @@ const MainRootResolver = new GraphQLObjectType({
 			type: new GraphQLList(UserSchema),
 			resolve: function() {
 				return User.findAll().then(users => {
+					console.log("Get All Users: ")
+		    		console.log(performance.now()-start2)
 					return users
 				})
 			}
@@ -148,6 +150,8 @@ const MainRootResolver = new GraphQLObjectType({
 			type: new GraphQLList(GameSchema),
 			resolve: function() {
 				return Game.findAll().then(games => {
+					console.log("Get All Games: ")
+		    		console.log(performance.now()-start3)
 					return games
 					})
 			}
@@ -383,16 +387,16 @@ const MainSchema = new GraphQLSchema({
 // Setting up Sequelize object for mysql database
 
 const sequelize = new Sequelize(sql_database, sql_user, sql_password, {
-	host: sql_instance,
+	host: '35.189.5.139',
 	dialect: 'mysql',
 	operatorsAliases: false,
 	logging: false,
 	define: {
 		timestamps: false
 	},
-	dialectOptions: {
-        socketPath: sql_instance
-    },
+	// dialectOptions: {
+ //        socketPath: sql_instance
+ //    },
 	pool: {
 		max: 5,
 		min: 0,
@@ -507,6 +511,8 @@ const auth = jwt({
       secret: 'teamsecret',
       credentialsRequired: false,
       getToken: function fromHeaderOrQuerystring (req) {
+      		start2 = performance.now()
+      		start3 = performance.now()
 		    if (req.headers.authorization && req.headers.authorization.split(' ')[1] != 'null'  && req.headers.authorization.split(' ')[0] === 'Bearer') {
 		        return req.headers.authorization.split(' ')[1];
 		    }
@@ -536,7 +542,10 @@ app.use('/graph', bodyParser.json(), auth, express_graphql(req => ({
 // Redirect to any Route
 
 app.get("*", (req, res) => {
+	start1 = performance.now()
     res.sendFile(path.normalize(__dirname+'/../dist/mygameslist/index.html'));
+    console.log("Load page from backend: ")
+    console.log(performance.now()-start1)
 })
 
 // Error handling for invalid requests
