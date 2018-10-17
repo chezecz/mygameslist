@@ -1,1 +1,68 @@
 
+/* DASHBOARD OR INDEX.HTML CSS */
+.dashboard_content {
+	color: #ffb642;
+	float: left;
+	margin: auto;
+    width: 100%;
+    padding: auto;
+	text-align: center;
+}
+.dashboard_button {
+	width: 20%;
+	text-align: center;
+	padding: auto;
+	margin: auto;
+}
+.dashboard_button button {
+	background-color: #000000;
+    border: 2px solid #ffb642;
+    color: #ffb642;
+    padding: 5px 10px;
+    cursor: pointer; /* Pointer/hand icon */
+	width: 50%;
+	color: #ffb642;
+	margin: auto;
+}
+.dashboard_button button:hover {
+	background-color: #ffb642;
+	color: #000000;
+}
+
+.login_form input{
+	border: 2px solid #ffb642;
+	border-radius: 4px;
+	background-color: #000000;
+    color: ffb642;
+    padding: 8px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.login_form input[type=text]{
+	color: #ffb642;
+}
+.login_form input[type=password]{
+	color: #ffb642;
+}
+
+.login_form input::placeholder {
+    color: #ffb642;
+	text-align: center;
+    opacity: .6;
+}
+.gameList {
+    list-style: none;  
+}
+.gameList a {
+    text-decoration: none;
+    color: #ffb642  
+}
+
+.userList {
+    list-style: none; 
+}
+.userList a {
+    text-decoration: none;
+    color: #ffb642
+}
