@@ -1,1 +1,46 @@
 
+/* GAME DESCRIPTION CSS */
+.game_desc_content {
+	height: 100%;
+}
+
+.game_overview {
+	color: #ffb642;
+	padding: 10px;
+	margin: auto;
+	text-align: center;
+}
+
+.game_description {
+	color: #ffb642;
+	float: left;
+	//text-align: center;
+	margin: 10px;
+}
+
+.game_button button {
+	background-color: #000000;
+    border: 2px solid #ffb642;
+    color: #ffb642;
+    padding: 5px 10px;
+    cursor: pointer; /* Pointer/hand icon */
+	width: 50%;
+	color: #ffb642;
+	margin: auto;
+}
+.game_button button:hover {
+	background-color: #ffb642;
+	color: #000000;
+}
+
+.right .game_description span {
+	text-align: left;
+}
+
+.right .game_description h1 {
+	text-align: center;
+}
+
+.right .game_description h4 {
+	text-align: center;
+}
