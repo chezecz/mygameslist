@@ -2,6 +2,8 @@
 
 This project is a web application for switch gamers. It allows them to track games and record current progress.
 
+Documentation website: https://chezecz.github.io/mygameslist/
+
 ## Quickstart
 
 1. Setup your own mysql database. 
