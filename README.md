@@ -61,21 +61,21 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Project status
 
-Currently application is in early prototype version.
+Currently application is in prototype version.
 
 ### Implemented pages
 
 #### Main Screen
 
-Currently empty
+Login/Register form
 
 #### User Profile
 
-Includes user bio and game list
+Includes user bio and game lists
 
 #### Game Info
 
-Includes infoprmation about selected game
+Includes infoprmation about selected games
     
 ## Style Agreement
 
