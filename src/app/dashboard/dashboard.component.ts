@@ -78,9 +78,8 @@ export class DashboardComponent implements OnInit {
 	title = "MyGameList";
 
 	ngOnInit() {
-		// this.getGames();
-		// this.getUsers();
-		this.getAll();
+		this.getGames();
+		this.getUsers();
 		if (localStorage.getItem('id')) {
 			this.logUser.id = Number(localStorage.getItem('id'));
 		}
