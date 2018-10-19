@@ -7,7 +7,9 @@ This project is a web application for switch gamers. It allows them to track gam
 1. Setup your own mysql database. 
 
 Use ```database/mygameslist.sql``` for reference
+
 **Note:** Refer to ```database/mysql_dump_db.sql``` for getting sample data.
+
 2. Set variables for mysql database using ```.env``` file using following structure:
 
 ```
