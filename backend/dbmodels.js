@@ -8,11 +8,12 @@ sql_user = process.env.SQL_USER;
 sql_password = process.env.SQL_PASSWORD;
 sql_database = process.env.SQL_DATABASE;
 sql_instance = '/cloudsql/' + process.env.INSTANCE_CONNECTION_NAME;
+sql_ip = process.env.SQL_IP;
 
 // Setting up Sequelize object for mysql database
 
 const sequelize = new Sequelize(sql_database, sql_user, sql_password, {
-	host: '35.189.5.139',
+	host: sql_ip,
 	dialect: 'mysql',
 	operatorsAliases: false,
 	logging: false,
