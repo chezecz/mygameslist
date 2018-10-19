@@ -37,9 +37,12 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(require('cookie-parser')());
+
+// Serving Angular Application
+
 app.use(express.static(__dirname+'/../'));
 
-// App Routing
+// Auth done using JWT framework
 
 const auth = jwt({
       secret: 'teamsecret',
@@ -52,16 +55,11 @@ const auth = jwt({
 		  }
     });
 
+// App Routing
+
 app.use('/', express.static(__dirname+'/../dist/mygameslist/'));
 
-app.listen(8080, () => console.log('Server activated'));
-
-// GraphQL Interactive Interface
-
-app.use('/graphql', auth, express_graphql({
-	schema: GraphSchema.Schema,
-	graphiql: true
-}));
+// Setting up graphQL endpoint
 
 app.use('/graph', bodyParser.json(), auth, express_graphql(req => ({
 	schema: GraphSchema.Schema,
@@ -71,7 +69,14 @@ app.use('/graph', bodyParser.json(), auth, express_graphql(req => ({
 	}
 })));
 
-// Redirect to any Route
+// GraphQL Interactive Interface
+
+app.use('/graphql', auth, express_graphql({
+	schema: GraphSchema.Schema,
+	graphiql: true
+}));
+
+// Redirect for any Route
 
 app.get("*", (req, res) => {
     res.sendFile(path.normalize(__dirname+'/../dist/mygameslist/index.html'));
@@ -80,10 +85,14 @@ app.get("*", (req, res) => {
 // Error handling for invalid requests
 
 app.use(function (req, res, next) {
-	res.status(404).send('Whoops')
+	res.status(404).send('404')
 });
 
 app.use(function (err, req, res, next) {
 	console.error(err.stack)
-	res.status(500).send('Whoops')
+	res.status(500).send('500')
 });
+
+// Launch Server
+
+app.listen(8080, () => console.log('Server activated'));

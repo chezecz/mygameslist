@@ -20,9 +20,14 @@ const sequelize = new Sequelize(sql_database, sql_user, sql_password, {
 	define: {
 		timestamps: false
 	},
+
+// Commented code is necessesary for Google Cloud App Engine
+
 	// dialectOptions: {
  //        socketPath: sql_instance
  //    },
+
+//
 	pool: {
 		max: 5,
 		min: 0,

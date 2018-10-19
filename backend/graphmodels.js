@@ -229,6 +229,8 @@ const MainRootResolver = new GraphQLObjectType({
 	})
 });
 
+// Mutations
+
 const MainRootMutation = new GraphQLObjectType({
 	name: "RootMutation",
 	fields: () => ({
@@ -337,6 +339,8 @@ const MainRootMutation = new GraphQLObjectType({
 		}
 	})
 });
+
+// Preparing Schema for GraphQL
 
 var MainSchema = new GraphQLSchema({
 	query: MainRootResolver,
