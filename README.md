@@ -27,11 +27,15 @@ Use production flag for better performance:
 
 ```ng build --prod```
 
-4. Launch NodeJS server
+4. Install required dependencies
+
+```npm install```
+
+5. Launch NodeJS server
 
 ```npm start```
 
-5. Check website
+6. Check website
 
 ```localhost:8080/```
 
@@ -95,17 +99,31 @@ Includes infoprmation about selected game
 
 ```
 .
+├── _config.yml
 ├── angular.json
+├── app.standard.yaml
+├── app.yaml
 ├── backend
-│   ├── README_for_testserver.md
-│   ├── gamesdatabase.db
-│   ├── index.js
-│   ├── mygameslist.sql
-│   ├── package-lock.json
-│   └── package.json
+│   ├── dbmodels.js
+│   ├── env.js
+│   ├── graphmodels.js
+│   └── index.js
 ├── database
 │   ├── gamesdatabase.db
-│   └── mygameslist.sql
+│   ├── mygameslist.sql
+│   └── mysql_dump_db.sql
+├── dist
+│   └── mygameslist
+│       ├── 3rdpartylicenses.txt
+│       ├── favicon.ico
+│       ├── index.html
+│       ├── main.00b1a97762a7283adbdc.js
+│       ├── polyfills.2f4a59095805af02bd79.js
+│       ├── runtime.a66f828dca56eeb90e02.js
+│       └── styles.2057e246d8770dbdbd5b.css
+├── img
+│   ├── gameposter.jpg
+│   └── roflandeze.png
 ├── package-lock.json
 ├── package.json
 ├── src
@@ -128,6 +146,8 @@ Includes infoprmation about selected game
 │   │   │   ├── description.component.spec.ts
 │   │   │   └── description.component.ts
 │   │   ├── service
+│   │   │   ├── auth.service.spec.ts
+│   │   │   ├── auth.service.ts
 │   │   │   ├── game.service.spec.ts
 │   │   │   ├── game.service.ts
 │   │   │   ├── list.service.spec.ts
@@ -154,8 +174,13 @@ Includes infoprmation about selected game
 │   │   └── environment.ts
 │   ├── favicon.ico
 │   ├── index.html
-│   └── styles.cs
+│   ├── karma.conf.js
+│   ├── main.ts
+│   ├── polyfills.ts
+│   ├── styles.css
+│   ├── test.ts
+│   ├── tsconfig.app.json
+│   ├── tsconfig.spec.json
+│   └── tslint.json
 └── README.md
-
-
 ```
