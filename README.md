@@ -2,6 +2,37 @@
 
 This project is a web application for switch gamers. It allows them to track games and record current progress.
 
+## Quickstart
+
+1. Setup your own mysql database. 
+
+Use ```database/mygameslist.sql``` for reference
+**Note:** Refer to ```database/mysql_dump_db.sql``` for getting sample data.
+2. Set variables for mysql database using ```.env``` file using following structure:
+
+```
+SQL_USER = username
+SQL_PASSWORD = password
+SQL_DATABASE = database_name
+SQL_IP = database_ip
+INSTANCE_CONNECTION_NAME = google_cloud_sql_instance_name
+```
+3. Build Angular Front End
+
+```ng build```
+
+Use production flag for better performance:
+
+```ng build --prod```
+
+4. Launch NodeJS server
+
+```npm start```
+
+5. Check website
+
+```localhost:8080/```
+
 ## How to run the application
 
 ### Angular installation
@@ -37,13 +68,6 @@ Includes user bio and game list
 #### Game Info
 
 Includes infoprmation about selected game
-
-## To Do
-
-    ~~1. Connect application and SQLite database~~
-    2. Set up CSS styles
-    3. Greate game lists
-    4. Review code accoring to coding agreement
     
 ## Style Agreement
 
